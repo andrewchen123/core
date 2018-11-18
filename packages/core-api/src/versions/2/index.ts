@@ -1,5 +1,4 @@
 import * as Hapi from "hapi";
-import { IPlugin } from "../../interfaces/plugin";
 import * as Blockchain from "./blockchain";
 import * as Blocks from "./blocks";
 import * as Delegates from "./delegates";

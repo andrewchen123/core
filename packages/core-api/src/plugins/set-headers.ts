@@ -1,6 +1,5 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
-import { IPlugin } from "../interfaces/plugin";
 
 const register = async (server: Hapi.Server, options: object): Promise<void> => {
   server.ext({

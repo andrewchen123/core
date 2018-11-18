@@ -1,5 +1,4 @@
 import * as Hapi from "hapi";
-import { IPlugin } from "../../interfaces/plugin";
 import * as Accounts from "./accounts";
 import * as Blocks from "./blocks";
 import * as Delegates from "./delegates";

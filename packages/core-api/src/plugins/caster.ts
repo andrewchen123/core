@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import * as Hapi from "hapi";
-import { IPlugin } from "../interfaces/plugin";
 import { bignumify } from '@arkecosystem/core-utils';
 
 function isBoolean(value) {
