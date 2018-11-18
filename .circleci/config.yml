@@ -38,7 +38,10 @@ jobs:
           command: yarn global add typescript
       - run:
           name: Install packages
-          command: yarn
+          command: lerna bootstrap
+      - run:
+          name: Build packages
+          command: yarn build
       - save_cache:
           key: 'core-node10-{{ checksum "checksum.txt" }}-1'
           paths:
