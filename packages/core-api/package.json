@@ -9,17 +9,16 @@
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "test": "cross-env ARK_ENV=test jest --runInBand --detectOpenHandles",
-    "test:coverage": "cross-env ARK_ENV=test jest --coverage --coveragePathIgnorePatterns='/(defaults.js|index.js)$' --runInBand --detectOpenHandles",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "tslint": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "lint": "eslint ./ --fix",
+    "depcheck": "depcheck ./",
+    "test": "yarn build && cross-env ARK_ENV=test jest --runInBand --detectOpenHandles",
+    "test:coverage": "yarn build && cross-env ARK_ENV=test jest --coverage --coveragePathIgnorePatterns='/(defaults.js|index.js)$' --runInBand --detectOpenHandles",
     "test:debug": "cross-env ARK_ENV=test node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch": "cross-env ARK_ENV=test jest --runInBand --watch",
-    "test:watch:all": "cross-env ARK_ENV=test jest --runInBand --watchAll",
-    "flow:coverage": "flow-coverage-report --config ../../.flowcoverage.json",
-    "flow:check": "flow check ./lib",
-    "flow:deps": "flow-typed install",
-    "flow:build": "flow-remove-types ./src/ -d ./lib/ --all --pretty",
-    "lint": "eslint ./ --fix",
-    "depcheck": "depcheck ./ --ignores=flow-bin"
+    "test:watch:all": "cross-env ARK_ENV=test jest --runInBand --watchAll"
   },
   "dependencies": {
     "@arkecosystem/core-container": "^0.1.1",
@@ -41,8 +40,12 @@
   },
   "devDependencies": {
     "@arkecosystem/core-test-utils": "^0.1.1",
-    "axios": "^0.18.0",
-    "flow-bin": "^0.86.0"
+    "@types/ajv": "^1.0.0",
+    "@types/boom": "^7.2.1",
+    "@types/hapi": "^17.6.3",
+    "@types/joi": "^14.0.0",
+    "@types/node": "^10.12.9",
+    "axios": "^0.18.0"
   },
   "publishConfig": {
     "access": "public"
