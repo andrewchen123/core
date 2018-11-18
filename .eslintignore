@@ -5,3 +5,4 @@
 /docs/**
 /tmp/**
 !.eslintrc.js
+/packages/core-api/lib/**
