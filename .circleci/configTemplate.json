@@ -56,20 +56,14 @@
         },
         {
           "run": {
-            "name": "Install Lerna",
-            "command": "yarn global add lerna"
-          }
-        },
-        {
-          "run": {
             "name": "Install packages",
-            "command": "lerna bootstrap"
+            "command": "yarn"
           }
         },
         {
           "run": {
             "name": "Build packages",
-            "command": "yarn build"
+            "command": "cd packages/core-api && yarn build && cd ../.."
           }
         },
         {
