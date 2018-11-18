@@ -6,13 +6,13 @@ export default function(ajv) {
     validate: (value) => {
       if (
         isNaN(value) ||
-        parseInt(value) !== value ||
+        parseInt(value, 10) !== value ||
         isNaN(parseInt(value, 10))
       ) {
         return false;
       }
 
-      value = parseInt(value);
+      value = parseInt(value, 10);
 
       return true;
     },

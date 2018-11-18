@@ -2,9 +2,9 @@ export default function(model: any) {
   return {
     type: model.type,
     fees: {
-      minFee: parseInt(model.minFee),
-      maxFee: parseInt(model.maxFee),
-      avgFee: parseInt(model.avgFee),
+      minFee: parseInt(model.minFee, 10),
+      maxFee: parseInt(model.maxFee, 10),
+      avgFee: parseInt(model.avgFee, 10),
     },
   };
 }

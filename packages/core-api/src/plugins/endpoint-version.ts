@@ -10,7 +10,7 @@ const register = async (server: Hapi.Server, options: any): Promise<void> => {
       const match = versionRegex.exec(request.path);
 
       if (match && match.length === 2) {
-        const apiVersion = parseInt(match[1]);
+        const apiVersion = parseInt(match[1], 10);
 
         if (!options.validVersions.includes(apiVersion)) {
           return Boom.badRequest(
