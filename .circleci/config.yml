@@ -34,6 +34,9 @@ jobs:
       - restore_cache:
           key: 'core-node10-{{ checksum "checksum.txt" }}-1'
       - run:
+          name: Install TypeScript
+          command: yarn global add typescript
+      - run:
           name: Install packages
           command: yarn
       - save_cache:
