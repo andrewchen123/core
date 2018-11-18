@@ -1,16 +1,16 @@
-import * as Hapi from "hapi";
 import * as Boom from "boom";
-import Transformer from '../../../services/transformer';
+import * as Hapi from "hapi";
+import Transformer from "../../../services/transformer";
 
 export default class Controller {
   protected paginate(request: Hapi.Request) {
     const pagination = {
-      offset: (request.query['page'] - 1) * request.query['limit'] || 0,
-      limit: request.query['limit'] || 100,
+      offset: (request.query.page - 1) * request.query.limit || 0,
+      limit: request.query.limit || 100,
     };
 
-    if (request.query['offset']) {
-      pagination.offset = request.query['offset'];
+    if (request.query.offset) {
+      pagination.offset = request.query.offset;
     }
 
     return pagination;

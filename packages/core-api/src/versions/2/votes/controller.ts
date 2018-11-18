@@ -1,8 +1,8 @@
-import * as Hapi from "hapi";
+import { constants } from "@arkecosystem/crypto";
 import * as Boom from "boom";
-import { constants } from '@arkecosystem/crypto';
-import Controller from '../shared/controller';
-import { blocksRepository, transactionsRepository } from '../../../repositories';
+import * as Hapi from "hapi";
+import { blocksRepository, transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class VotesController extends Controller {
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -16,7 +16,7 @@ export default class VotesController extends Controller {
         },
       );
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -30,10 +30,10 @@ export default class VotesController extends Controller {
       );
 
       if (!transaction) {
-        return Boom.notFound('Vote not found');
+        return Boom.notFound("Vote not found");
       }
 
-      return super.respondWithResource(request, transaction, 'transaction');
+      return super.respondWithResource(request, transaction, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }

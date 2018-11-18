@@ -8,6 +8,6 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/blockchain",
-    handler: controller.index
+    handler: controller.index,
   });
 }

@@ -9,7 +9,7 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/accounts/getAllAccounts",
-    handler: controller.index
+    handler: controller.index,
   });
 
   server.route({
@@ -18,7 +18,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.show,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getAccount,
         },
       },
@@ -31,7 +31,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.balance,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getBalance,
         },
       },
@@ -44,7 +44,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.publicKey,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getPublicKey,
         },
       },
@@ -54,7 +54,7 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/accounts/delegates/fee",
-    handler: controller.fee
+    handler: controller.fee,
   });
 
   server.route({
@@ -63,7 +63,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.delegates,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getDelegates,
         },
       },
@@ -76,7 +76,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.top,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.top,
         },
       },
@@ -86,6 +86,6 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/accounts/count",
-    handler: controller.count
+    handler: controller.count,
   });
 }

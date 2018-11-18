@@ -21,5 +21,5 @@ const register = async (server: Hapi.Server): Promise<void> => {
 export = {
   register,
   name: "Public API - Legacy",
-  version: "1.0.0"
+  version: "1.0.0",
 };

@@ -1,7 +1,7 @@
-import * as Hapi from "hapi";
 import * as Boom from "boom";
-import Controller from '../shared/controller';
-import { blocksRepository, transactionsRepository } from '../../../repositories';
+import * as Hapi from "hapi";
+import { blocksRepository, transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class BlocksController extends Controller {
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -12,7 +12,7 @@ export default class BlocksController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, blocks, 'block');
+      return super.toPagination(request, blocks, "block");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -23,10 +23,10 @@ export default class BlocksController extends Controller {
       const block = await blocksRepository.findById(request.params.id);
 
       if (!block) {
-        return Boom.notFound('Block not found');
+        return Boom.notFound("Block not found");
       }
 
-      return super.respondWithResource(request, block, 'block');
+      return super.respondWithResource(request, block, "block");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -37,7 +37,7 @@ export default class BlocksController extends Controller {
       const block = await blocksRepository.findById(request.params.id);
 
       if (!block) {
-        return Boom.notFound('Block not found');
+        return Boom.notFound("Block not found");
       }
 
       const transactions = await transactionsRepository.findAllByBlock(block.id, {
@@ -46,7 +46,7 @@ export default class BlocksController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -62,7 +62,7 @@ export default class BlocksController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, blocks, 'block');
+      return super.toPagination(request, blocks, "block");
     } catch (error) {
       return Boom.badImplementation(error);
     }

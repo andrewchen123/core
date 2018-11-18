@@ -1,12 +1,12 @@
-import * as Hapi from "hapi";
 import * as Boom from "boom";
-import Transformer from '../../../services/transformer';
+import * as Hapi from "hapi";
+import Transformer from "../../../services/transformer";
 
 export default class Controller {
   protected paginate(request: Hapi.Request) {
     return {
-      offset: request.query['offset'] || 0,
-      limit: request.query['limit'] || 100,
+      offset: request.query.offset || 0,
+      limit: request.query.limit || 100,
     };
   }
 

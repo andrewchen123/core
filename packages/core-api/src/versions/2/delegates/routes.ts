@@ -11,8 +11,8 @@ export default function(server: Hapi.Server): void {
     path: "/delegates",
     handler: controller.index,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -20,8 +20,8 @@ export default function(server: Hapi.Server): void {
     path: "/delegates/{id}",
     handler: controller.show,
     options: {
-      validate: Schema.show
-    }
+      validate: Schema.show,
+    },
   });
 
   server.route({
@@ -29,8 +29,8 @@ export default function(server: Hapi.Server): void {
     path: "/delegates/{id}/blocks",
     handler: controller.blocks,
     options: {
-      validate: Schema.blocks
-    }
+      validate: Schema.blocks,
+    },
   });
 
   server.route({
@@ -38,8 +38,8 @@ export default function(server: Hapi.Server): void {
     path: "/delegates/{id}/voters",
     handler: controller.voters,
     options: {
-      validate: Schema.voters
-    }
+      validate: Schema.voters,
+    },
   });
 
   server.route({
@@ -47,8 +47,8 @@ export default function(server: Hapi.Server): void {
     path: "/delegates/{id}/voters/balances",
     handler: controller.voterBalances,
     options: {
-      validate: Schema.voterBalances
-    }
+      validate: Schema.voterBalances,
+    },
   });
 
   server.route({
@@ -56,7 +56,7 @@ export default function(server: Hapi.Server): void {
     path: "/delegates/search",
     handler: controller.search,
     options: {
-      validate: Schema.search
-    }
+      validate: Schema.search,
+    },
   });
 }

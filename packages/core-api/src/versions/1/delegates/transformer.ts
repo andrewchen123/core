@@ -1,4 +1,4 @@
-const { delegateCalculator } = require('@arkecosystem/core-utils');
+import { delegateCalculator } from "@arkecosystem/core-utils";
 
 export default function(delegate) {
   return {

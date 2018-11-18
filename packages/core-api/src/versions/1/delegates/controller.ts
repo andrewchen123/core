@@ -1,8 +1,8 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
+import { slots } from "@arkecosystem/crypto";
 import * as Boom from "boom";
-import { slots } from '@arkecosystem/crypto';
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
+import * as Hapi from "hapi";
+import Controller from "../shared/controller";
 
 export default class DelegatesController extends Controller {
   protected blockchain: any;
@@ -12,9 +12,9 @@ export default class DelegatesController extends Controller {
   public constructor() {
     super();
 
-    this.blockchain = Container.resolvePlugin('blockchain');
-    this.config = Container.resolvePlugin('config');
-    this.database = Container.resolvePlugin('database');
+    this.blockchain = Container.resolvePlugin("blockchain");
+    this.config = Container.resolvePlugin("config");
+    this.database = Container.resolvePlugin("database");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -23,13 +23,13 @@ export default class DelegatesController extends Controller {
         // @ts-ignore
         ...request.query,
         ...{
-          offset: request.query['offset'] || 0,
-          limit: request.query['limit'] || 51,
+          offset: request.query.offset || 0,
+          limit: request.query.limit || 51,
         },
       });
 
       return super.respondWith({
-        delegates: super.toCollection(request, rows, 'delegate'),
+        delegates: super.toCollection(request, rows, "delegate"),
         totalCount: count,
       });
     } catch (error) {
@@ -39,20 +39,20 @@ export default class DelegatesController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      if (!request.query['publicKey'] && !request.query['username']) {
-        return super.respondWith('Delegate not found', true);
+      if (!request.query.publicKey && !request.query.username) {
+        return super.respondWith("Delegate not found", true);
       }
 
       const delegate = await this.database.delegates.findById(
-        request.query['publicKey'] || request.query['username'],
+        request.query.publicKey || request.query.username,
       );
 
       if (!delegate) {
-        return super.respondWith('Delegate not found', true);
+        return super.respondWith("Delegate not found", true);
       }
 
       return super.respondWith({
-        delegate: super.toResource(request, delegate, 'delegate'),
+        delegate: super.toResource(request, delegate, "delegate"),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -72,7 +72,7 @@ export default class DelegatesController extends Controller {
   public async search(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const query = {
-        username: request.query['q'],
+        username: request.query.q,
       };
       const { rows } = await this.database.delegates.search({
         ...query,
@@ -80,7 +80,7 @@ export default class DelegatesController extends Controller {
       });
 
       return super.respondWith({
-        delegates: super.toCollection(request, rows, 'delegate'),
+        delegates: super.toCollection(request, rows, "delegate"),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -89,7 +89,7 @@ export default class DelegatesController extends Controller {
 
   public async voters(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const delegate = await this.database.delegates.findById(request.query['publicKey']);
+      const delegate = await this.database.delegates.findById(request.query.publicKey);
 
       if (!delegate) {
         return super.respondWith({
@@ -100,7 +100,7 @@ export default class DelegatesController extends Controller {
       const accounts = await this.database.wallets.findAllByVote(delegate.publicKey);
 
       return super.respondWith({
-        accounts: super.toCollection(request, accounts.rows, 'voter'),
+        accounts: super.toCollection(request, accounts.rows, "voter"),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -121,7 +121,7 @@ export default class DelegatesController extends Controller {
   public async forged(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const wallet = this.database.walletManager.findByPublicKey(
-        request.query['generatorPublicKey'],
+        request.query.generatorPublicKey,
       );
 
       return super.respondWith({
@@ -137,7 +137,7 @@ export default class DelegatesController extends Controller {
   public async nextForgers(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const lastBlock = this.blockchain.getLastBlock();
-      const limit = request.query['limit'] || 10;
+      const limit = request.query.limit || 10;
 
       const delegatesCount = this.config.getConstants(lastBlock).activeDelegates;
       const currentSlot = slots.getSlotNumber(lastBlock.data.timestamp);
@@ -145,7 +145,7 @@ export default class DelegatesController extends Controller {
       let activeDelegates = await this.database.getActiveDelegates(
         lastBlock.data.height,
       );
-      activeDelegates = activeDelegates.map(delegate => delegate.publicKey);
+      activeDelegates = activeDelegates.map((delegate) => delegate.publicKey);
 
       const nextForgers = [];
       for (let i = 1; i <= delegatesCount && i <= limit; i++) {

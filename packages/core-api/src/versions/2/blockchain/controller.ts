@@ -1,8 +1,8 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
+import { bignumify } from "@arkecosystem/core-utils";
 import * as Boom from "boom";
-import * as Container from '@arkecosystem/core-container';
-import { bignumify } from '@arkecosystem/core-utils';
-import Controller from '../shared/controller';
+import * as Hapi from "hapi";
+import Controller from "../shared/controller";
 
 export default class BlockchainController extends Controller {
   protected config: any;
@@ -11,8 +11,8 @@ export default class BlockchainController extends Controller {
   public constructor() {
     super();
 
-    this.config = Container.resolvePlugin('config');
-    this.blockchain = Container.resolvePlugin('blockchain');
+    this.config = Container.resolvePlugin("config");
+    this.blockchain = Container.resolvePlugin("blockchain");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {

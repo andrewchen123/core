@@ -1,10 +1,8 @@
-const { bignumify } = require('@arkecosystem/core-utils');
-const blockchain = require('@arkecosystem/core-container').resolvePlugin(
-  'blockchain',
-);
+import * as Container from "@arkecosystem/core-container";
+import { bignumify } from "@arkecosystem/core-utils";
 
 export default function(model) {
-  const lastBlock = blockchain.getLastBlock();
+  const lastBlock = Container.resolvePlugin("blockchain").getLastBlock();
 
   return {
     id: model.id,

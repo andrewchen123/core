@@ -1,19 +1,19 @@
-import * as Container from '@arkecosystem/core-container';
-import { IRepository } from '../interfaces/repository';
-import Repository from './repository';
-import buildFilterQuery from './utils/filter-query';
+import * as Container from "@arkecosystem/core-container";
+import { IRepository } from "../interfaces/repository";
+import Repository from "./repository";
+import buildFilterQuery from "./utils/filter-query";
 
-class BlocksRepository extends Repository implements IRepository {
+export default class BlocksRepository extends Repository implements IRepository {
   /**
    * Get all blocks for the given parameters.
    * @param  {Object}  parameters
    * @return {Object}
    */
-  async findAll(parameters: any = {}) {
+  public async findAll(parameters: any = {}) {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       const conditions = Object.entries(this._formatConditions(parameters));
 
       if (conditions.length) {
@@ -44,7 +44,7 @@ class BlocksRepository extends Repository implements IRepository {
    * @param  {Object} paginator
    * @return {Object}
    */
-  async findAllByGenerator(generatorPublicKey, paginator) {
+  public async findAllByGenerator(generatorPublicKey, paginator) {
     return this.findAll({ ...{ generatorPublicKey }, ...paginator });
   }
 
@@ -53,7 +53,7 @@ class BlocksRepository extends Repository implements IRepository {
    * @param  {Number} id
    * @return {Object}
    */
-  async findById(id) {
+  public async findById(id) {
     const query = this.query
       .select()
       .from(this.query)
@@ -68,7 +68,7 @@ class BlocksRepository extends Repository implements IRepository {
    * @param  {String} generatorPublicKey
    * @return {Object}
    */
-  async findLastByPublicKey(generatorPublicKey) {
+  public async findLastByPublicKey(generatorPublicKey) {
     const query = this.query
       .select(this.query.id, this.query.timestamp)
       .from(this.query)
@@ -83,28 +83,28 @@ class BlocksRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async search(parameters) {
+  public async search(parameters) {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       const conditions = buildFilterQuery(this._formatConditions(parameters), {
         exact: [
-          'id',
-          'version',
-          'previous_block',
-          'payload_hash',
-          'generator_public_key',
-          'block_signature',
+          "id",
+          "version",
+          "previous_block",
+          "payload_hash",
+          "generator_public_key",
+          "block_signature",
         ],
         between: [
-          'timestamp',
-          'height',
-          'number_of_transactions',
-          'total_amount',
-          'total_fee',
-          'reward',
-          'payload_length',
+          "timestamp",
+          "height",
+          "number_of_transactions",
+          "total_amount",
+          "total_fee",
+          "reward",
+          "payload_length",
         ],
       });
 
@@ -132,20 +132,18 @@ class BlocksRepository extends Repository implements IRepository {
     });
   }
 
-  getModel() {
+  public getModel() {
     return this.database.models.block;
   }
 
-  __orderBy(parameters) {
-    if (!parameters.orderBy) { return ['height', 'desc']; }
+  public __orderBy(parameters) {
+    if (!parameters.orderBy) { return ["height", "desc"]; }
 
-    const orderBy = parameters.orderBy.split(':').map(p => p.toLowerCase());
-    if (orderBy.length !== 2 || ['desc', 'asc'].includes(orderBy[1]) !== true) {
-      return ['height', 'desc'];
+    const orderBy = parameters.orderBy.split(":").map((p) => p.toLowerCase());
+    if (orderBy.length !== 2 || ["desc", "asc"].includes(orderBy[1]) !== true) {
+      return ["height", "desc"];
     }
 
     return orderBy;
   }
 }
-
-module.exports = new BlocksRepository();

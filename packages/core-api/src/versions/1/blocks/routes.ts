@@ -12,7 +12,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.index,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getBlocks,
         },
       },
@@ -25,7 +25,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.show,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getBlock,
         },
       },
@@ -35,66 +35,66 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/blocks/getEpoch",
-    handler: controller.epoch
+    handler: controller.epoch,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getHeight",
-    handler: controller.height
+    handler: controller.height,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getheight",
-    handler: controller.height
+    handler: controller.height,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getNethash",
-    handler: controller.nethash
+    handler: controller.nethash,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getFee",
-    handler: controller.fee
+    handler: controller.fee,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getFees",
-    handler: controller.fees
+    handler: controller.fees,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getfees",
-    handler: controller.fees
+    handler: controller.fees,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getMilestone",
-    handler: controller.milestone
+    handler: controller.milestone,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getReward",
-    handler: controller.reward
+    handler: controller.reward,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getSupply",
-    handler: controller.supply
+    handler: controller.supply,
   });
 
   server.route({
     method: "GET",
     path: "/blocks/getStatus",
-    handler: controller.status
+    handler: controller.status,
   });
 }

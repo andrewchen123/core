@@ -1,7 +1,7 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
+import * as Hapi from "hapi";
+import Controller from "../shared/controller";
 
 export default class AccountsController extends Controller {
   protected config: any;
@@ -11,9 +11,9 @@ export default class AccountsController extends Controller {
   public constructor() {
     super();
 
-    this.config = Container.resolvePlugin('config');
-    this.database = Container.resolvePlugin('database');
-    this.blockchain = Container.resolvePlugin('blockchain');
+    this.config = Container.resolvePlugin("config");
+    this.database = Container.resolvePlugin("database");
+    this.blockchain = Container.resolvePlugin("blockchain");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -25,7 +25,7 @@ export default class AccountsController extends Controller {
       });
 
       return super.respondWith({
-        accounts: super.toCollection(request, rows, 'account'),
+        accounts: super.toCollection(request, rows, "account"),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -34,14 +34,14 @@ export default class AccountsController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const account = await this.database.wallets.findById(request.query['address']);
+      const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
-        return super.respondWith('Account not found', true);
+        return super.respondWith("Account not found", true);
       }
 
       return super.respondWith({
-        account: super.toResource(request, account, 'account'),
+        account: super.toResource(request, account, "account"),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -50,15 +50,15 @@ export default class AccountsController extends Controller {
 
   public async balance(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const account = await this.database.wallets.findById(request.query['address']);
+      const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
-        return super.respondWith({ balance: '0', unconfirmedBalance: '0' });
+        return super.respondWith({ balance: "0", unconfirmedBalance: "0" });
       }
 
       return super.respondWith({
-        balance: account ? `${account.balance}` : '0',
-        unconfirmedBalance: account ? `${account.balance}` : '0',
+        balance: account ? `${account.balance}` : "0",
+        unconfirmedBalance: account ? `${account.balance}` : "0",
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -67,10 +67,10 @@ export default class AccountsController extends Controller {
 
   public async publicKey(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const account = await this.database.wallets.findById(request.query['address']);
+      const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
-        return super.respondWith('Account not found', true);
+        return super.respondWith("Account not found", true);
       }
 
       return super.respondWith({ publicKey: account.publicKey });
@@ -92,15 +92,15 @@ export default class AccountsController extends Controller {
 
   public async delegates(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const account = await this.database.wallets.findById(request.query['address']);
+      const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
-        return super.respondWith('Address not found.', true);
+        return super.respondWith("Address not found.", true);
       }
 
       if (!account.vote) {
         return super.respondWith(
-          `Address ${request.query['address']} hasn't voted yet.`,
+          `Address ${request.query.address} hasn't voted yet.`,
           true,
         );
       }
@@ -108,7 +108,7 @@ export default class AccountsController extends Controller {
       const delegate = await this.database.delegates.findById(account.vote);
 
       return super.respondWith({
-        delegates: [super.toResource(request, delegate, 'delegate')],
+        delegates: [super.toResource(request, delegate, "delegate")],
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -119,7 +119,7 @@ export default class AccountsController extends Controller {
     try {
       let accounts = this.database.wallets.top(super.paginate(request));
 
-      accounts = accounts.rows.map(account => ({
+      accounts = accounts.rows.map((account) => ({
         address: account.address,
         balance: `${account.balance}`,
         publicKey: account.publicKey,

@@ -11,8 +11,8 @@ export default function(server: Hapi.Server): void {
     path: "/blocks",
     handler: controller.index,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -20,8 +20,8 @@ export default function(server: Hapi.Server): void {
     path: "/blocks/{id}",
     handler: controller.show,
     options: {
-      validate: Schema.show
-    }
+      validate: Schema.show,
+    },
   });
 
   server.route({
@@ -29,8 +29,8 @@ export default function(server: Hapi.Server): void {
     path: "/blocks/{id}/transactions",
     handler: controller.transactions,
     options: {
-      validate: Schema.transactions
-    }
+      validate: Schema.transactions,
+    },
   });
 
   server.route({
@@ -38,7 +38,7 @@ export default function(server: Hapi.Server): void {
     path: "/blocks/search",
     handler: controller.search,
     options: {
-      validate: Schema.search
-    }
+      validate: Schema.search,
+    },
   });
 }

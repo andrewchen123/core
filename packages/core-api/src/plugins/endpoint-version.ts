@@ -1,11 +1,11 @@
-import * as Hapi from "hapi";
 import * as Boom from "boom";
+import * as Hapi from "hapi";
 
 const versionRegex = /^\/api\/v([0-9])\//;
 
 const register = async (server: Hapi.Server, options: any): Promise<void> => {
   server.ext({
-    type: 'onRequest',
+    type: "onRequest",
     async method(request, h) {
       const match = versionRegex.exec(request.path);
 
@@ -29,5 +29,5 @@ const register = async (server: Hapi.Server, options: any): Promise<void> => {
 export = {
   register,
   name: "endpoint-version",
-  version: "1.0.0"
+  version: "1.0.0",
 };

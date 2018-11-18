@@ -1,86 +1,86 @@
-import * as Container from '@arkecosystem/core-container';
-const lastBlock = Container.resolvePlugin('blockchain').getLastBlock();
+import * as Container from "@arkecosystem/core-container";
+const lastBlock = Container.resolvePlugin("blockchain").getLastBlock();
 
 export const forgingStatus: object = {
-  type: 'object',
+  type: "object",
   properties: {
     publicKey: {
-      type: 'string',
-      format: 'publicKey',
+      type: "string",
+      format: "publicKey",
     },
   },
-  required: ['publicKey'],
+  required: ["publicKey"],
 };
 
 export const getDelegate: object = {
-  type: 'object',
+  type: "object",
   properties: {
     publicKey: {
-      type: 'string',
+      type: "string",
     },
     username: {
-      type: 'string',
+      type: "string",
     },
   },
 };
 
 export const search: object = {
-  type: 'object',
+  type: "object",
   properties: {
     q: {
-      type: 'string',
+      type: "string",
       minLength: 1,
       maxLength: 20,
     },
     limit: {
-      type: 'integer',
+      type: "integer",
       minimum: 1,
       maximum: 100,
     },
   },
-  required: ['q'],
+  required: ["q"],
 };
 
 export const getVoters: object = {
-  type: 'object',
+  type: "object",
   properties: {
     publicKey: {
-      type: 'string',
-      format: 'publicKey',
+      type: "string",
+      format: "publicKey",
     },
   },
-  required: ['publicKey'],
+  required: ["publicKey"],
 };
 
 export const getDelegates: object = {
-  type: 'object',
+  type: "object",
   properties: {
     orderBy: {
-      type: 'string',
+      type: "string",
     },
     limit: {
-      type: 'integer',
+      type: "integer",
       minimum: 1,
       maximum: lastBlock
         ? Container
-          .resolvePlugin('config')
+          .resolvePlugin("config")
           .getConstants(lastBlock.data.height).activeDelegates
         : 51,
     },
     offset: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
   },
 };
 
 export const getForgedByAccount: object = {
-  type: 'object',
+  type: "object",
   properties: {
     generatorPublicKey: {
-      type: 'string',
-      format: 'publicKey',
+      type: "string",
+      format: "publicKey",
     },
   },
-  required: ['generatorPublicKey'],
+  required: ["generatorPublicKey"],
 };

@@ -1,20 +1,20 @@
 /* eslint no-await-in-loop: "off" */
 
-import * as Hapi from "hapi";
 import {
-  createServer,
   createSecureServer,
+  createServer,
   mountServer,
   plugins,
-} from '@arkecosystem/core-http-utils';
+} from "@arkecosystem/core-http-utils";
+import * as Hapi from "hapi";
 
-export async function init(config: any): Promise<Map<String, Hapi.Server>> {
+export async function init(config: any): Promise<Map<string, Hapi.Server>> {
   const options = {
     host: config.host,
     port: config.port,
     routes: {
       cors: {
-        additionalHeaders: ['api-version'],
+        additionalHeaders: ["api-version"],
       },
       validate: {
         async failAction(request, h, err) {
@@ -24,11 +24,11 @@ export async function init(config: any): Promise<Map<String, Hapi.Server>> {
     },
   };
 
-  const servers: Map<String, Hapi.Server> = new Map();
-  servers.set('http', await createServer(options));
+  const servers: Map<string, Hapi.Server> = new Map();
+  servers.set("http", await createServer(options));
 
   if (config.ssl.enabled) {
-    servers.set('https', await createSecureServer(options, null, config.ssl));
+    servers.set("https", await createSecureServer(options, null, config.ssl));
   }
 
   for (const [type, server] of servers) {
@@ -40,42 +40,42 @@ export async function init(config: any): Promise<Map<String, Hapi.Server>> {
       plugin: plugins.whitelist,
       options: {
         whitelist: config.whitelist,
-        name: 'Public API',
+        name: "Public API",
       },
     });
 
     await server.register({
-      plugin: require('./plugins/set-headers'),
+      plugin: require("./plugins/set-headers"),
     });
 
     await server.register({
-      plugin: require('hapi-api-version'),
+      plugin: require("hapi-api-version"),
       options: config.versions,
     });
 
     await server.register({
-      plugin: require('./plugins/endpoint-version'),
+      plugin: require("./plugins/endpoint-version"),
       options: { validVersions: config.versions.validVersions },
     });
 
     await server.register({
-      plugin: require('./plugins/caster'),
+      plugin: require("./plugins/caster"),
     });
 
     await server.register({
-      plugin: require('./plugins/validation'),
+      plugin: require("./plugins/validation"),
     });
 
     await server.register({
-      plugin: require('hapi-rate-limit'),
+      plugin: require("hapi-rate-limit"),
       options: config.rateLimit,
     });
 
     await server.register({
-      plugin: require('hapi-pagination'),
+      plugin: require("hapi-pagination"),
       options: {
         meta: {
-          baseUri: '',
+          baseUri: "",
         },
         query: {
           limit: {
@@ -83,17 +83,17 @@ export async function init(config: any): Promise<Map<String, Hapi.Server>> {
           },
         },
         results: {
-          name: 'data',
+          name: "data",
         },
         routes: {
           include: config.pagination.include,
-          exclude: ['*'],
+          exclude: ["*"],
         },
       },
     });
 
     for (const plugin of config.plugins) {
-      if (typeof plugin.plugin === 'string') {
+      if (typeof plugin.plugin === "string") {
         plugin.plugin = require(plugin.plugin);
       }
 

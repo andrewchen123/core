@@ -5,7 +5,7 @@ export interface IRepository {
   cache: any;
   model: any;
   query: any;
-  columns: Array<string>;
+  columns: string[];
 
   getModel(): string;
 }

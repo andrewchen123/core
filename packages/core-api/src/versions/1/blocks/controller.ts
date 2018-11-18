@@ -1,9 +1,9 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
+import { bignumify } from "@arkecosystem/core-utils";
 import * as Boom from "boom";
-import { bignumify } from '@arkecosystem/core-utils';
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
-import { blocksRepository } from '../../../repositories';
+import * as Hapi from "hapi";
+import { blocksRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class BlocksController extends Controller {
   protected blockchain: any;
@@ -12,8 +12,8 @@ export default class BlocksController extends Controller {
   public constructor() {
     super();
 
-    this.blockchain = Container.resolvePlugin('blockchain');
-    this.config = Container.resolvePlugin('config');
+    this.blockchain = Container.resolvePlugin("blockchain");
+    this.config = Container.resolvePlugin("config");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -25,11 +25,11 @@ export default class BlocksController extends Controller {
       });
 
       if (!rows) {
-        return super.respondWith('No blocks found', true);
+        return super.respondWith("No blocks found", true);
       }
 
       return super.respondWith({
-        blocks: super.toCollection(request, rows, 'block'),
+        blocks: super.toCollection(request, rows, "block"),
         count,
       });
     } catch (error) {
@@ -39,17 +39,17 @@ export default class BlocksController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const block = await blocksRepository.findById(request.query['id']);
+      const block = await blocksRepository.findById(request.query.id);
 
       if (!block) {
         return super.respondWith(
-          `Block with id ${request.query['id']} not found`,
+          `Block with id ${request.query.id} not found`,
           true,
         );
       }
 
       return super.respondWith({
-        block: super.toResource(request, block, 'block'),
+        block: super.toResource(request, block, "block"),
       });
     } catch (error) {
       return Boom.badImplementation(error);

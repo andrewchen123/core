@@ -1,9 +1,9 @@
-export default function (ajv) {
-  ajv.addFormat('signature', {
-    type: 'string',
-    validate: value => {
+export default function(ajv) {
+  ajv.addFormat("signature", {
+    type: "string",
+    validate: (value) => {
       try {
-        return Buffer.from(value, 'hex').length < 73;
+        return Buffer.from(value, "hex").length < 73;
       } catch (e) {
         return false;
       }

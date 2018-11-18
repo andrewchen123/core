@@ -11,8 +11,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets",
     options: {
       handler: controller.index,
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -20,8 +20,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/top",
     handler: controller.top,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -29,8 +29,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/{id}",
     handler: controller.show,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -38,8 +38,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/{id}/transactions",
     handler: controller.transactions,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -47,8 +47,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/{id}/transactions/sent",
     handler: controller.transactionsSent,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -56,8 +56,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/{id}/transactions/received",
     handler: controller.transactionsReceived,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -65,8 +65,8 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/{id}/votes",
     handler: controller.votes,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -74,7 +74,7 @@ export default function(server: Hapi.Server): void {
     path: "/wallets/search",
     handler: controller.search,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 }

@@ -1,5 +1,5 @@
+import * as Container from "@arkecosystem/core-container";
 import * as Joi from "joi";
-import * as Container from '@arkecosystem/core-container';
 import * as Pagination from "../shared/schemas/pagination";
 
 export const index: object = {
@@ -10,7 +10,7 @@ export const index: object = {
       id: Joi.string()
         .hex()
         .length(64),
-      blockId: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      blockId: Joi.string().regex(/^[0-9]+$/, "numbers"),
       type: Joi.number()
         .integer()
         .min(0),
@@ -47,13 +47,13 @@ export const store: object = {
   payload: {
     transactions: Joi.array()
       .max(
-        Container.resolveOptions('transactionPool').maxTransactionsPerRequest,
+        Container.resolveOptions("transactionPool").maxTransactionsPerRequest,
       )
       .items(
         Joi.object({
           vendorField: Joi.string()
-            .empty('')
-            .max(64, 'utf8'),
+            .empty("")
+            .max(64, "utf8"),
         }).options({ allowUnknown: true }),
       ),
   },
@@ -86,7 +86,7 @@ export const search: object = {
     id: Joi.string()
       .hex()
       .length(64),
-    blockId: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+    blockId: Joi.string().regex(/^[0-9]+$/, "numbers"),
     type: Joi.number()
       .integer()
       .min(0),

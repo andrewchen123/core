@@ -1,8 +1,8 @@
 import {
   bignumify,
-  formatTimestamp,
   delegateCalculator,
-} from '@arkecosystem/core-utils';
+  formatTimestamp,
+} from "@arkecosystem/core-utils";
 
 export default function(delegate) {
   const data = {
@@ -29,7 +29,7 @@ export default function(delegate) {
   const lastBlock = delegate.lastBlock;
 
   if (lastBlock) {
-    data.blocks['last'] = {
+    data.blocks.last = {
       id: lastBlock.id,
       timestamp: formatTimestamp(lastBlock.timestamp),
     };

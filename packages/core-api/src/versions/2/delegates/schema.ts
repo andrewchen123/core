@@ -56,14 +56,14 @@ export const blocks: object = {
     ...Pagination,
     ...{
       orderBy: Joi.string(),
-      id: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      id: Joi.string().regex(/^[0-9]+$/, "numbers"),
       version: Joi.number()
         .integer()
         .min(0),
       timestamp: Joi.number()
         .integer()
         .min(0),
-      previousBlock: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      previousBlock: Joi.string().regex(/^[0-9]+$/, "numbers"),
       height: Joi.number()
         .integer()
         .positive(),

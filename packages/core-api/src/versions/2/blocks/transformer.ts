@@ -1,8 +1,8 @@
-import * as Container from '@arkecosystem/core-container';
-import { formatTimestamp, bignumify } from '@arkecosystem/core-utils';
+import * as Container from "@arkecosystem/core-container";
+import { bignumify, formatTimestamp } from "@arkecosystem/core-utils";
 
 export default function(model) {
-  const database = Container.resolvePlugin('database');
+  const database = Container.resolvePlugin("database");
   const generator = database.walletManager.findByPublicKey(
     model.generatorPublicKey,
   );

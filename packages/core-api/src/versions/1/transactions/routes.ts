@@ -12,7 +12,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.index,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getTransactions,
         },
       },
@@ -25,7 +25,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.show,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getTransaction,
         },
       },
@@ -35,12 +35,12 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/transactions/unconfirmed",
-    handler: controller.unconfirmed
+    handler: controller.unconfirmed,
   });
 
   server.route({
     method: "GET",
     path: "/transactions/unconfirmed/get",
-    handler: controller.showUnconfirmed
+    handler: controller.showUnconfirmed,
   });
 }

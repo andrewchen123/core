@@ -1,12 +1,12 @@
-import * as Container from '@arkecosystem/core-container';
-import { crypto, models } from '@arkecosystem/crypto';
-import { formatTimestamp, bignumify } from '@arkecosystem/core-utils';
+import * as Container from "@arkecosystem/core-container";
+import { bignumify, formatTimestamp } from "@arkecosystem/core-utils";
+import { crypto, models } from "@arkecosystem/crypto";
 
 export default function(model) {
-  const config = Container.resolvePlugin('config');
-  const blockchain = Container.resolvePlugin('blockchain');
+  const config = Container.resolvePlugin("config");
+  const blockchain = Container.resolvePlugin("blockchain");
 
-  const data = new models.Transaction(model.serialized.toString('hex'));
+  const data = new models.Transaction(model.serialized.toString("hex"));
   const lastBlock = blockchain.getLastBlock();
 
   return {

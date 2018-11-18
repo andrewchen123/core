@@ -11,8 +11,8 @@ export default function(server: Hapi.Server): void {
     path: "/transactions",
     handler: controller.index,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -25,8 +25,8 @@ export default function(server: Hapi.Server): void {
         pagination: {
           enabled: false,
         },
-      }
-    }
+      },
+    },
   });
 
   server.route({
@@ -34,8 +34,8 @@ export default function(server: Hapi.Server): void {
     path: "/transactions/{id}",
     handler: controller.show,
     options: {
-      validate: Schema.show
-    }
+      validate: Schema.show,
+    },
   });
 
   server.route({
@@ -43,8 +43,8 @@ export default function(server: Hapi.Server): void {
     path: "/transactions/unconfirmed",
     handler: controller.unconfirmed,
     options: {
-      validate: Schema.unconfirmed
-    }
+      validate: Schema.unconfirmed,
+    },
   });
 
   server.route({
@@ -52,8 +52,8 @@ export default function(server: Hapi.Server): void {
     path: "/transactions/unconfirmed/{id}",
     handler: controller.showUnconfirmed,
     options: {
-      validate: Schema.showUnconfirmed
-    }
+      validate: Schema.showUnconfirmed,
+    },
   });
 
   server.route({
@@ -61,19 +61,19 @@ export default function(server: Hapi.Server): void {
     path: "/transactions/search",
     handler: controller.search,
     options: {
-      validate: Schema.search
-    }
+      validate: Schema.search,
+    },
   });
 
   server.route({
     method: "GET",
     path: "/transactions/types",
-    handler: controller.types
+    handler: controller.types,
   });
 
   server.route({
     method: "GET",
     path: "/transactions/fees",
-    handler: controller.fees
+    handler: controller.fees,
   });
 }

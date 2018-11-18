@@ -1,4 +1,4 @@
-import { bignumify } from '@arkecosystem/core-utils';
+import { bignumify } from "@arkecosystem/core-utils";
 
 export default function(model) {
   return {

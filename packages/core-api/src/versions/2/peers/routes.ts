@@ -11,14 +11,14 @@ export default function(server: Hapi.Server): void {
     path: "/peers",
     handler: controller.index,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
     method: "GET",
     path: "/peers/suspended",
-    handler: controller.suspended
+    handler: controller.suspended,
   });
 
   server.route({
@@ -26,7 +26,7 @@ export default function(server: Hapi.Server): void {
     path: "/peers/{ip}",
     handler: controller.show,
     options: {
-      validate: Schema.show
-    }
+      validate: Schema.show,
+    },
   });
 }

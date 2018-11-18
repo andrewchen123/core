@@ -12,7 +12,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.index,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getDelegates,
         },
       },
@@ -25,7 +25,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.show,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getDelegate,
         },
       },
@@ -35,7 +35,7 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/delegates/count",
-    handler: controller.count
+    handler: controller.count,
   });
 
   server.route({
@@ -44,7 +44,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.search,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.search,
         },
       },
@@ -57,7 +57,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.voters,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getVoters,
         },
       },
@@ -67,7 +67,7 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/delegates/fee",
-    handler: controller.fee
+    handler: controller.fee,
   });
 
   server.route({
@@ -76,7 +76,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.forged,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getForgedByAccount,
         },
       },
@@ -86,6 +86,6 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/delegates/getNextForgers",
-    handler: controller.nextForgers
+    handler: controller.nextForgers,
   });
 }

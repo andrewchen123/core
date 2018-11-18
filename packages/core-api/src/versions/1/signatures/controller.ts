@@ -1,17 +1,17 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
+import * as Hapi from "hapi";
+import Controller from "../shared/controller";
 
-export default class SignaturesController extends Controller{
+export default class SignaturesController extends Controller {
   protected blockchain: any;
   protected config: any;
 
   public constructor() {
     super();
 
-    this.blockchain = Container.resolvePlugin('blockchain');
-    this.config = Container.resolvePlugin('config');
+    this.blockchain = Container.resolvePlugin("blockchain");
+    this.config = Container.resolvePlugin("config");
   }
 
   public async fee(request: Hapi.Request, h: Hapi.ResponseToolkit) {

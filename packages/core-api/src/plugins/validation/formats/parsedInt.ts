@@ -1,9 +1,9 @@
 /* eslint no-restricted-globals: "off" */
 
-export default function (ajv) {
-  ajv.addFormat('parsedInt', {
-    type: 'string',
-    validate: value => {
+export default function(ajv) {
+  ajv.addFormat("parsedInt", {
+    type: "string",
+    validate: (value) => {
       if (
         isNaN(value) ||
         parseInt(value) !== value ||

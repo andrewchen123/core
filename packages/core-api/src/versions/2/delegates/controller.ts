@@ -1,9 +1,9 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
+import * as Hapi from "hapi";
 import orderBy from "lodash/orderBy";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
-import { blocksRepository, transactionsRepository } from '../../../repositories';
+import { blocksRepository, transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class DelegatesController extends Controller {
   protected database: any;
@@ -11,7 +11,7 @@ export default class DelegatesController extends Controller {
   public constructor() {
     super();
 
-    this.database = Container.resolvePlugin('database');
+    this.database = Container.resolvePlugin("database");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -22,7 +22,7 @@ export default class DelegatesController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, delegates, 'delegate');
+      return super.toPagination(request, delegates, "delegate");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -33,10 +33,10 @@ export default class DelegatesController extends Controller {
       const delegate = await this.database.delegates.findById(request.params.id);
 
       if (!delegate) {
-        return Boom.notFound('Delegate not found');
+        return Boom.notFound("Delegate not found");
       }
 
-      return super.respondWithResource(request, delegate, 'delegate');
+      return super.respondWithResource(request, delegate, "delegate");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -52,7 +52,7 @@ export default class DelegatesController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, delegates, 'delegate');
+      return super.toPagination(request, delegates, "delegate");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -63,7 +63,7 @@ export default class DelegatesController extends Controller {
       const delegate = await this.database.delegates.findById(request.params.id);
 
       if (!delegate) {
-        return Boom.notFound('Delegate not found');
+        return Boom.notFound("Delegate not found");
       }
 
       const blocks = await blocksRepository.findAllByGenerator(
@@ -71,7 +71,7 @@ export default class DelegatesController extends Controller {
         super.paginate(request),
       );
 
-      return super.toPagination(request, blocks, 'block');
+      return super.toPagination(request, blocks, "block");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -82,7 +82,7 @@ export default class DelegatesController extends Controller {
       const delegate = await this.database.delegates.findById(request.params.id);
 
       if (!delegate) {
-        return Boom.notFound('Delegate not found');
+        return Boom.notFound("Delegate not found");
       }
 
       const wallets = await this.database.wallets.findAllByVote(
@@ -90,7 +90,7 @@ export default class DelegatesController extends Controller {
         super.paginate(request),
       );
 
-      return super.toPagination(request, wallets, 'wallet');
+      return super.toPagination(request, wallets, "wallet");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -101,15 +101,15 @@ export default class DelegatesController extends Controller {
       const delegate = await this.database.delegates.findById(request.params.id);
 
       if (!delegate) {
-        return Boom.notFound('Delegate not found');
+        return Boom.notFound("Delegate not found");
       }
 
       const wallets = await this.database.wallets
         .all()
-        .filter(wallet => wallet.vote === delegate.publicKey);
+        .filter((wallet) => wallet.vote === delegate.publicKey);
 
       const voters = {};
-      orderBy(wallets, ['balance'], ['desc']).forEach(wallet => {
+      orderBy(wallets, ["balance"], ["desc"]).forEach((wallet) => {
         voters[wallet.address] = +wallet.balance.toFixed();
       });
 

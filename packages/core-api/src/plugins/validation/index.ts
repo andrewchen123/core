@@ -1,21 +1,21 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as AJV from 'ajv';
-import * as Hapi from "hapi";
+import * as AJV from "ajv";
 import * as Boom from "boom";
+import * as fs from "fs";
+import * as Hapi from "hapi";
+import * as path from "path";
 
 // SOF: IMPORT CUSTOM AJV FORMATS
-import registerCsvFormat from './formats/csv';
-import registerAddressFormat from './formats/address';
-import registerHexFormat from './formats/hex';
-import registerIpFormat from './formats/ip';
-import registerParsedIntFormat from './formats/parsedInt';
-import registerPublicKeyFormat from './formats/publicKey';
-import registerSignatureFormat from './formats/signature';
-import registerVendorFieldFormat from './formats/vendorField';
+import registerAddressFormat from "./formats/address";
+import registerCsvFormat from "./formats/csv";
+import registerHexFormat from "./formats/hex";
+import registerIpFormat from "./formats/ip";
+import registerParsedIntFormat from "./formats/parsedInt";
+import registerPublicKeyFormat from "./formats/publicKey";
+import registerSignatureFormat from "./formats/signature";
+import registerVendorFieldFormat from "./formats/vendorField";
 // EOF: IMPORT CUSTOM AJV FORMATS
 
-const PLUGIN_NAME = 'hapi-ajv';
+const PLUGIN_NAME = "hapi-ajv";
 
 const register = async (server: Hapi.Server, options: object): Promise<void> => {
   const ajv = new AJV();
@@ -47,7 +47,7 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
   };
 
   server.ext({
-    type: 'onPreHandler',
+    type: "onPreHandler",
     method: (request, h) => {
       const config = request.route.settings.plugins[PLUGIN_NAME] || {};
 
@@ -63,7 +63,6 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
 
       if (config.querySchema) {
         errors = validate(config.querySchema, request.query);
-        console.log(errors);
 
         if (errors) {
           return createErrorResponse(request, h, errors);
@@ -78,5 +77,5 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
 export = {
   register,
   name: PLUGIN_NAME,
-  version: "1.0.0"
+  version: "1.0.0",
 };

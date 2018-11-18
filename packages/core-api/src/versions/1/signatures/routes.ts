@@ -8,6 +8,6 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/signatures/fee",
-    handler: controller.fee
+    handler: controller.fee,
   });
 }

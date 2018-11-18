@@ -1,17 +1,17 @@
-import * as moment from 'moment';
-import * as Container from '@arkecosystem/core-container';
-import { slots, constants } from '@arkecosystem/crypto';
-import { IRepository } from '../interfaces/repository';
-import Repository from './repository';
-import buildFilterQuery from './utils/filter-query';
+import * as Container from "@arkecosystem/core-container";
+import { constants, slots } from "@arkecosystem/crypto";
+import * as moment from "moment";
+import { IRepository } from "../interfaces/repository";
+import Repository from "./repository";
+import buildFilterQuery from "./utils/filter-query";
 
-class TransactionsRepository extends Repository implements IRepository {
+export default class TransactionsRepository extends Repository implements IRepository {
   /**
    * Get all transactions.
    * @param  {Object}  params
    * @return {Object}
    */
-  async findAll(parameters: any = {}) {
+  public async findAll(parameters: any = {}) {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -25,7 +25,7 @@ class TransactionsRepository extends Repository implements IRepository {
       parameters.senderPublicKey = senderPublicKey;
     }
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       const conditions = Object.entries(this._formatConditions(parameters));
 
       if (conditions.length) {
@@ -68,7 +68,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object}  params
    * @return {Object}
    */
-  async findAllLegacy(parameters: any = {}) {
+  public async findAllLegacy(parameters: any = {}) {
     const selectQuery = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query);
@@ -80,7 +80,7 @@ class TransactionsRepository extends Repository implements IRepository {
       );
     }
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       const conditions = Object.entries(this._formatConditions(parameters));
 
       if (conditions.length) {
@@ -115,13 +115,13 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async findAllByWallet(wallet, parameters: any = {}) {
+  public async findAllByWallet(wallet, parameters: any = {}) {
     const selectQuery = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query);
     const countQuery = this._makeEstimateQuery();
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       for (const item of queries) {
         item
           .where(this.query.sender_public_key.equals(wallet.publicKey))
@@ -148,7 +148,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async findAllBySender(senderPublicKey, parameters: any = {}) {
+  public async findAllBySender(senderPublicKey, parameters: any = {}) {
     return this.findAll({ ...{ senderPublicKey }, ...parameters });
   }
 
@@ -158,7 +158,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async findAllByRecipient(recipientId, parameters: any = {}) {
+  public async findAllByRecipient(recipientId, parameters: any = {}) {
     return this.findAll({ ...{ recipientId }, ...parameters });
   }
 
@@ -169,7 +169,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async allVotesBySender(senderPublicKey, parameters: any = {}) {
+  public async allVotesBySender(senderPublicKey, parameters: any = {}) {
     return this.findAll({
       ...{ senderPublicKey, type: constants.TRANSACTION_TYPES.VOTE },
       ...parameters,
@@ -182,7 +182,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async findAllByBlock(blockId, parameters: any = {}) {
+  public async findAllByBlock(blockId, parameters: any = {}) {
     return this.findAll({ ...{ blockId }, ...parameters });
   }
 
@@ -192,7 +192,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} parameters
    * @return {Object}
    */
-  async findAllByType(type, parameters: any = {}) {
+  public async findAllByType(type, parameters: any = {}) {
     return this.findAll({ ...{ type }, ...parameters });
   }
 
@@ -201,7 +201,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Number} id
    * @return {Object}
    */
-  async findById(id) {
+  public async findById(id) {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -218,7 +218,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Number} id
    * @return {Object}
    */
-  async findByTypeAndId(type, id) {
+  public async findByTypeAndId(type, id) {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -234,7 +234,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Array} ids
    * @return {Object}
    */
-  async findByIds(ids) {
+  public async findByIds(ids) {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -247,7 +247,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * Get all transactions that have a vendor field.
    * @return {Object}
    */
-  async findWithVendorField() {
+  public async findWithVendorField() {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -262,18 +262,18 @@ class TransactionsRepository extends Repository implements IRepository {
    * Calculates min, max and average fee statistics based on transactions table
    * @return {Object}
    */
-  async getFeeStatistics() {
+  public async getFeeStatistics() {
     const query = this.query
       .select(
         this.query.type,
-        this.query.fee.min('minFee'),
-        this.query.fee.max('maxFee'),
-        this.query.fee.avg('avgFee'),
-        this.query.timestamp.max('timestamp'),
+        this.query.fee.min("minFee"),
+        this.query.fee.max("maxFee"),
+        this.query.fee.avg("avgFee"),
+        this.query.timestamp.max("timestamp"),
       )
       .from(this.query)
       .where(
-        this.query.timestamp.gte(slots.getTime(moment().subtract(30, 'days'))),
+        this.query.timestamp.gte(slots.getTime(moment().subtract(30, "days"))),
       )
       .group(this.query.type)
       .order('"timestamp" DESC');
@@ -287,7 +287,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Object} params
    * @return {Object}
    */
-  async search(parameters) {
+  public async search(parameters) {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -299,18 +299,18 @@ class TransactionsRepository extends Repository implements IRepository {
       }
     }
 
-    const applyConditions = queries => {
+    const applyConditions = (queries) => {
       const conditions = buildFilterQuery(this._formatConditions(parameters), {
         exact: [
-          'id',
-          'block_id',
-          'type',
-          'version',
-          'sender_public_key',
-          'recipient_id',
+          "id",
+          "block_id",
+          "type",
+          "version",
+          "sender_public_key",
+          "recipient_id",
         ],
-        between: ['timestamp', 'amount', 'fee'],
-        wildcard: ['vendor_field_hex'],
+        between: ["timestamp", "amount", "fee"],
+        wildcard: ["vendor_field_hex"],
       });
 
       if (conditions.length) {
@@ -341,7 +341,7 @@ class TransactionsRepository extends Repository implements IRepository {
     return results;
   }
 
-  getModel() {
+  public getModel() {
     return this.database.models.transaction;
   }
 
@@ -350,7 +350,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {Array|Object} data
    * @return {Object}
    */
-  async __mapBlocksToTransactions(data) {
+  public async __mapBlocksToTransactions(data) {
     const blockQuery = this.database.models.block.query();
 
     // Array...
@@ -376,13 +376,13 @@ class TransactionsRepository extends Repository implements IRepository {
         const query = blockQuery
           .select(blockQuery.id, blockQuery.height)
           .from(blockQuery)
-          .where(blockQuery.id.in(missingFromCache.map(d => d.blockId)))
+          .where(blockQuery.id.in(missingFromCache.map((d) => d.blockId)))
           .group(blockQuery.id);
 
         const blocks = await this._findMany(query);
 
         for (const missing of missingFromCache) {
-          const block = blocks.find(item => item.id === missing.blockId);
+          const block = blocks.find((item) => item.id === missing.blockId);
           if (block) {
             data[missing.index].block = block;
             this.__setBlockCache(block);
@@ -419,7 +419,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {String} blockId
    * @return {Object|null}
    */
-  __getBlockCache(blockId) {
+  public __getBlockCache(blockId) {
     const height = this.cache.get(`heights:${blockId}`);
 
     return height ? { height, id: blockId } : null;
@@ -431,7 +431,7 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param  {String} block.id
    * @param  {Number} block.height
    */
-  __setBlockCache({ id, height }) {
+  public __setBlockCache({ id, height }) {
     this.cache.set(`heights:${id}`, height);
   }
 
@@ -440,15 +440,13 @@ class TransactionsRepository extends Repository implements IRepository {
    * @param {String} senderId
    * @return {String}
    */
-  __publicKeyFromSenderId(senderId) {
+  public __publicKeyFromSenderId(senderId) {
     return this.database.walletManager.findByAddress(senderId).publicKey;
   }
 
-  __orderBy(parameters) {
+  public __orderBy(parameters) {
     return parameters.orderBy
-      ? parameters.orderBy.split(':').map(p => p.toLowerCase())
-      : ['timestamp', 'desc'];
+      ? parameters.orderBy.split(":").map((p) => p.toLowerCase())
+      : ["timestamp", "desc"];
   }
 }
-
-module.exports = new TransactionsRepository();

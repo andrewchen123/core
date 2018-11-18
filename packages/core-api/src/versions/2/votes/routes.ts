@@ -11,8 +11,8 @@ export default function(server: Hapi.Server): void {
     path: "/votes",
     handler: controller.index,
     options: {
-      validate: Schema.index
-    }
+      validate: Schema.index,
+    },
   });
 
   server.route({
@@ -20,7 +20,7 @@ export default function(server: Hapi.Server): void {
     path: "/votes/{id}",
     handler: controller.show,
     options: {
-      validate: Schema.show
-    }
+      validate: Schema.show,
+    },
   });
 }

@@ -1,72 +1,72 @@
 export const getBalance: object = {
-  type: 'object',
+  type: "object",
   properties: {
     address: {
-      type: 'string',
+      type: "string",
       minLength: 1,
-      format: 'address',
+      format: "address",
     },
   },
-  required: ['address'],
+  required: ["address"],
 };
 
 export const getPublicKey: object = {
-  type: 'object',
+  type: "object",
   properties: {
     address: {
-      type: 'string',
+      type: "string",
       minLength: 1,
-      format: 'address',
+      format: "address",
     },
   },
-  required: ['address'],
+  required: ["address"],
 };
 
 export const generatePublicKey: object = {
-  type: 'object',
+  type: "object",
   properties: {
     secret: {
-      type: 'string',
+      type: "string",
       minLength: 1,
     },
   },
-  required: ['secret'],
+  required: ["secret"],
 };
 
 export const getDelegates: object = {
-  type: 'object',
+  type: "object",
   properties: {
     address: {
-      type: 'string',
+      type: "string",
       minLength: 1,
-      format: 'address',
+      format: "address",
     },
   },
-  required: ['address'],
+  required: ["address"],
 };
 
 export const getAccount: object = {
-  type: 'object',
+  type: "object",
   properties: {
     address: {
-      type: 'string',
+      type: "string",
       minLength: 1,
-      format: 'address',
+      format: "address",
     },
   },
-  required: ['address'],
+  required: ["address"],
 };
 
 export const top: object = {
-  type: 'object',
+  type: "object",
   properties: {
     limit: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
       maximum: 100,
     },
     offset: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
   },

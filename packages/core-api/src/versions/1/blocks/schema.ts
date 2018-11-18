@@ -1,50 +1,50 @@
 export const getBlock: object = {
-  type: 'object',
+  type: "object",
   properties: {
     id: {
-      type: 'string',
+      type: "string",
       minLength: 1,
     },
   },
-  required: ['id'],
+  required: ["id"],
 };
 
 export const getBlocks: object = {
-  type: 'object',
+  type: "object",
   properties: {
     limit: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
       maximum: 100,
     },
     orderBy: {
-      type: 'string',
+      type: "string",
     },
     offset: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
     generatorPublicKey: {
-      type: 'string',
-      format: 'publicKey',
+      type: "string",
+      format: "publicKey",
     },
     totalAmount: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
     totalFee: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
     reward: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
     },
     previousBlock: {
-      type: 'string',
+      type: "string",
     },
     height: {
-      type: 'integer',
+      type: "integer",
     },
   },
 };

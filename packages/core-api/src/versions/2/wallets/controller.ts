@@ -1,8 +1,8 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
-import { blocksRepository, transactionsRepository } from '../../../repositories';
+import * as Hapi from "hapi";
+import { blocksRepository, transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class WalletsController extends Controller {
   protected database: any;
@@ -10,7 +10,7 @@ export default class WalletsController extends Controller {
   public constructor() {
     super();
 
-    this.database = Container.resolvePlugin('database');
+    this.database = Container.resolvePlugin("database");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -23,7 +23,7 @@ export default class WalletsController extends Controller {
 
       // Object.assign(request.query, super.paginate(request))
 
-      return super.toPagination(request, wallets, 'wallet');
+      return super.toPagination(request, wallets, "wallet");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -33,7 +33,7 @@ export default class WalletsController extends Controller {
     try {
       const wallets = await this.database.wallets.top(super.paginate(request));
 
-      return super.toPagination(request, wallets, 'wallet');
+      return super.toPagination(request, wallets, "wallet");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -44,10 +44,10 @@ export default class WalletsController extends Controller {
       const wallet = await this.database.wallets.findById(request.params.id);
 
       if (!wallet) {
-        return Boom.notFound('Wallet not found');
+        return Boom.notFound("Wallet not found");
       }
 
-      return super.respondWithResource(request, wallet, 'wallet');
+      return super.respondWithResource(request, wallet, "wallet");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -58,7 +58,7 @@ export default class WalletsController extends Controller {
       const wallet = await this.database.wallets.findById(request.params.id);
 
       if (!wallet) {
-        return Boom.notFound('Wallet not found');
+        return Boom.notFound("Wallet not found");
       }
 
       const transactions = await transactionsRepository.findAllByWallet(wallet, {
@@ -68,7 +68,7 @@ export default class WalletsController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -79,7 +79,7 @@ export default class WalletsController extends Controller {
       const wallet = await this.database.wallets.findById(request.params.id);
 
       if (!wallet) {
-        return Boom.notFound('Wallet not found');
+        return Boom.notFound("Wallet not found");
       }
 
       // NOTE: We unset this value because it otherwise will produce a faulty SQL query
@@ -95,7 +95,7 @@ export default class WalletsController extends Controller {
         },
       );
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -106,7 +106,7 @@ export default class WalletsController extends Controller {
       const wallet = await this.database.wallets.findById(request.params.id);
 
       if (!wallet) {
-        return Boom.notFound('Wallet not found');
+        return Boom.notFound("Wallet not found");
       }
 
       // NOTE: We unset this value because it otherwise will produce a faulty SQL query
@@ -122,7 +122,7 @@ export default class WalletsController extends Controller {
         },
       );
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -133,7 +133,7 @@ export default class WalletsController extends Controller {
       const wallet = await this.database.wallets.findById(request.params.id);
 
       if (!wallet) {
-        return Boom.notFound('Wallet not found');
+        return Boom.notFound("Wallet not found");
       }
 
       // NOTE: We unset this value because it otherwise will produce a faulty SQL query
@@ -147,7 +147,7 @@ export default class WalletsController extends Controller {
         },
       );
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -163,7 +163,7 @@ export default class WalletsController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, wallets, 'wallet');
+      return super.toPagination(request, wallets, "wallet");
     } catch (error) {
       return Boom.badImplementation(error);
     }

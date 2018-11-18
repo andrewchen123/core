@@ -1,8 +1,8 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
-import { blocksRepository, transactionsRepository } from '../../../repositories';
+import * as Hapi from "hapi";
+import { blocksRepository, transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
 export default class NodeController extends Controller {
   protected config: any;
@@ -11,8 +11,8 @@ export default class NodeController extends Controller {
   public constructor() {
     super();
 
-    this.config = Container.resolvePlugin('config');
-    this.blockchain = Container.resolvePlugin('blockchain');
+    this.config = Container.resolvePlugin("config");
+    this.blockchain = Container.resolvePlugin("blockchain");
   }
 
   public async status(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -61,12 +61,12 @@ export default class NodeController extends Controller {
           symbol: this.config.network.client.symbol,
           explorer: this.config.network.client.explorer,
           version: this.config.network.pubKeyHash,
-          ports: super.toResource(request, this.config, 'ports'),
+          ports: super.toResource(request, this.config, "ports"),
           constants: this.config.getConstants(this.blockchain.getLastBlock().data.height),
           feeStatistics: super.toCollection(
             request,
             feeStatisticsData,
-            'fee-statistics',
+            "fee-statistics",
           ),
         },
       };

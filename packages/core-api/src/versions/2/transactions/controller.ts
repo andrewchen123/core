@@ -1,12 +1,12 @@
-import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 import * as Boom from "boom";
+import * as Hapi from "hapi";
 import * as pluralize from "pluralize";
-import * as Container from '@arkecosystem/core-container';
-import Controller from '../shared/controller';
-import { transactionsRepository } from '../../../repositories';
+import { transactionsRepository } from "../../../repositories";
+import Controller from "../shared/controller";
 
-import { constants } from '@arkecosystem/crypto';
-import { TransactionGuard } from '@arkecosystem/core-transaction-pool';
+import { TransactionGuard } from "@arkecosystem/core-transaction-pool";
+import { constants } from "@arkecosystem/crypto";
 
 export default class TransactionsController extends Controller {
   protected blockchain: any;
@@ -17,10 +17,10 @@ export default class TransactionsController extends Controller {
   public constructor() {
     super();
 
-    this.blockchain = Container.resolvePlugin('blockchain');
-    this.config = Container.resolvePlugin('config');
-    this.logger = Container.resolvePlugin('logger');
-    this.transactionPool = Container.resolvePlugin('transactionPool');
+    this.blockchain = Container.resolvePlugin("blockchain");
+    this.config = Container.resolvePlugin("config");
+    this.logger = Container.resolvePlugin("logger");
+    this.transactionPool = Container.resolvePlugin("transactionPool");
   }
 
   public async index(request: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -31,7 +31,7 @@ export default class TransactionsController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -40,11 +40,11 @@ export default class TransactionsController extends Controller {
   public async store(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       if (!this.transactionPool.options.enabled) {
-        return Boom.serverUnavailable('Transaction pool is disabled.');
+        return Boom.serverUnavailable("Transaction pool is disabled.");
       }
 
       const { eligible, notEligible } = this.transactionPool.checkEligibility(
-        request.payload['transactions'],
+        request.payload.transactions,
       );
 
       const guard = new TransactionGuard(this.transactionPool);
@@ -55,19 +55,19 @@ export default class TransactionsController extends Controller {
 
       await guard.validate(eligible);
 
-      if (guard.hasAny('accept')) {
+      if (guard.hasAny("accept")) {
         this.logger.info(
           `Received ${guard.accept.length} new ${pluralize(
-            'transaction',
+            "transaction",
             guard.accept.length,
           )}`,
         );
 
-        await guard.addToTransactionPool('accept');
+        await guard.addToTransactionPool("accept");
       }
 
-      if (guard.hasAny('broadcast')) {
-        Container.resolvePlugin('p2p').broadcastTransactions(guard.broadcast);
+      if (guard.hasAny("broadcast")) {
+        Container.resolvePlugin("p2p").broadcastTransactions(guard.broadcast);
       }
 
       return guard.toJson();
@@ -81,10 +81,10 @@ export default class TransactionsController extends Controller {
       const transaction = await transactionsRepository.findById(request.params.id);
 
       if (!transaction) {
-        return Boom.notFound('Transaction not found');
+        return Boom.notFound("Transaction not found");
       }
 
-      return super.respondWithResource(request, transaction, 'transaction');
+      return super.respondWithResource(request, transaction, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -93,7 +93,7 @@ export default class TransactionsController extends Controller {
   public async unconfirmed(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       if (!this.transactionPool.options.enabled) {
-        return Boom.serverUnavailable('Transaction pool is disabled.');
+        return Boom.serverUnavailable("Transaction pool is disabled.");
       }
 
       const pagination = super.paginate(request);
@@ -102,7 +102,7 @@ export default class TransactionsController extends Controller {
         pagination.offset,
         pagination.limit,
       );
-      transactions = transactions.map(transaction => ({
+      transactions = transactions.map((transaction) => ({
         serialized: transaction,
       }));
 
@@ -112,7 +112,7 @@ export default class TransactionsController extends Controller {
           count: this.transactionPool.getPoolSize(),
           rows: transactions,
         },
-        'transaction',
+        "transaction",
       );
     } catch (error) {
       return Boom.badImplementation(error);
@@ -122,18 +122,18 @@ export default class TransactionsController extends Controller {
   public async showUnconfirmed(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       if (!this.transactionPool.options.enabled) {
-        return Boom.serverUnavailable('Transaction pool is disabled.');
+        return Boom.serverUnavailable("Transaction pool is disabled.");
       }
 
       let transaction = this.transactionPool.getTransaction(request.params.id);
 
       if (!transaction) {
-        return Boom.notFound('Transaction not found');
+        return Boom.notFound("Transaction not found");
       }
 
       transaction = { serialized: transaction.serialized };
 
-      return super.respondWithResource(request, transaction, 'transaction');
+      return super.respondWithResource(request, transaction, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }
@@ -149,7 +149,7 @@ export default class TransactionsController extends Controller {
         ...super.paginate(request),
       });
 
-      return super.toPagination(request, transactions, 'transaction');
+      return super.toPagination(request, transactions, "transaction");
     } catch (error) {
       return Boom.badImplementation(error);
     }

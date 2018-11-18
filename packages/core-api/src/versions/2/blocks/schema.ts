@@ -6,14 +6,14 @@ export const index: object = {
     ...Pagination,
     ...{
       orderBy: Joi.string(),
-      id: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      id: Joi.string().regex(/^[0-9]+$/, "numbers"),
       version: Joi.number()
         .integer()
         .min(0),
       timestamp: Joi.number()
         .integer()
         .min(0),
-      previousBlock: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      previousBlock: Joi.string().regex(/^[0-9]+$/, "numbers"),
       height: Joi.number()
         .integer()
         .positive(),
@@ -43,7 +43,7 @@ export const index: object = {
 
 export const show: object = {
   params: {
-    id: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+    id: Joi.string().regex(/^[0-9]+$/, "numbers"),
   },
 };
 
@@ -58,7 +58,7 @@ export const transactions: object = {
       id: Joi.string()
         .hex()
         .length(66),
-      blockId: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+      blockId: Joi.string().regex(/^[0-9]+$/, "numbers"),
       type: Joi.number()
         .integer()
         .min(0),
@@ -91,11 +91,11 @@ export const transactions: object = {
 export const search: object = {
   query: Pagination,
   payload: {
-    id: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+    id: Joi.string().regex(/^[0-9]+$/, "numbers"),
     version: Joi.number()
       .integer()
       .min(0),
-    previousBlock: Joi.string().regex(/^[0-9]+$/, 'numbers'),
+    previousBlock: Joi.string().regex(/^[0-9]+$/, "numbers"),
     payloadHash: Joi.string().hex(),
     generatorPublicKey: Joi.string()
       .hex()

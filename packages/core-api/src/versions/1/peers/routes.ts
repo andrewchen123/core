@@ -12,7 +12,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.index,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getPeers,
         },
       },
@@ -25,7 +25,7 @@ export default function(server: Hapi.Server): void {
     handler: controller.show,
     options: {
       plugins: {
-        'hapi-ajv': {
+        "hapi-ajv": {
           querySchema: Schema.getPeer,
         },
       },
@@ -35,6 +35,6 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/peers/version",
-    handler: controller.version
+    handler: controller.version,
   });
 }

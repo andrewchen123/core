@@ -8,18 +8,18 @@ export default function(server: Hapi.Server): void {
   server.route({
     method: "GET",
     path: "/loader/status",
-    handler: controller.status
+    handler: controller.status,
   });
 
   server.route({
     method: "GET",
     path: "/loader/status/sync",
-    handler: controller.syncing
+    handler: controller.syncing,
   });
 
   server.route({
     method: "GET",
     path: "/loader/autoconfigure",
-    handler: controller.autoconfigure
+    handler: controller.autoconfigure,
   });
 }
