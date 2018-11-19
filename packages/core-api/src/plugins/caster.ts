@@ -29,6 +29,7 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
           query[key] = query[key].toLowerCase() === "true";
         } else if (isNumber(query[key])) {
           // @ts-ignore
+          // tslint:disable-next-line triple-equals
           query[key] = query[key] == Number(query[key])
               ? Number(query[key])
               : bignumify(query[key]).toString();
