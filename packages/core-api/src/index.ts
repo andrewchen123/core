@@ -6,14 +6,6 @@ export const plugin = {
   defaults: require("./defaults"),
   alias: "api",
   async register(container, options) {
-    if (!options.enabled) {
-      container
-        .resolvePlugin("logger")
-        .info("Public API is disabled :grey_exclamation:");
-
-      return;
-    }
-
     const server = new Server(options);
     await server.start();
 

@@ -37,8 +37,10 @@ export default class Server {
       },
     };
 
-    this.http = await createServer(options);
-    this.registerPlugins("HTTP", this.http);
+    if (this.config.enabled) {
+      this.http = await createServer(options);
+      this.registerPlugins("HTTP", this.http);
+    }
 
     if (this.config.ssl.enabled) {
       this.https = await createSecureServer(options, null, this.config.ssl);
