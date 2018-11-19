@@ -7,5 +7,5 @@ export interface IRepository {
   query: any;
   columns: string[];
 
-  getModel(): string;
+  getModel(): object;
 }

@@ -9,7 +9,7 @@ export default class BlocksRepository extends Repository implements IRepository 
    * @param  {Object}  parameters
    * @return {Object}
    */
-  public async findAll(parameters: any = {}) {
+  public async findAll(parameters: any = {}): Promise<any> {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -44,7 +44,7 @@ export default class BlocksRepository extends Repository implements IRepository 
    * @param  {Object} paginator
    * @return {Object}
    */
-  public async findAllByGenerator(generatorPublicKey, paginator) {
+  public async findAllByGenerator(generatorPublicKey, paginator): Promise<any> {
     return this.findAll({ ...{ generatorPublicKey }, ...paginator });
   }
 
@@ -53,7 +53,7 @@ export default class BlocksRepository extends Repository implements IRepository 
    * @param  {Number} id
    * @return {Object}
    */
-  public async findById(id) {
+  public async findById(id): Promise<any> {
     const query = this.query
       .select()
       .from(this.query)
@@ -68,7 +68,7 @@ export default class BlocksRepository extends Repository implements IRepository 
    * @param  {String} generatorPublicKey
    * @return {Object}
    */
-  public async findLastByPublicKey(generatorPublicKey) {
+  public async findLastByPublicKey(generatorPublicKey): Promise<any> {
     const query = this.query
       .select(this.query.id, this.query.timestamp)
       .from(this.query)
@@ -83,7 +83,7 @@ export default class BlocksRepository extends Repository implements IRepository 
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async search(parameters) {
+  public async search(parameters): Promise<any> {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -132,11 +132,11 @@ export default class BlocksRepository extends Repository implements IRepository 
     });
   }
 
-  public getModel() {
+  public getModel(): object {
     return this.database.models.block;
   }
 
-  public __orderBy(parameters) {
+  public __orderBy(parameters): string[] {
     if (!parameters.orderBy) { return ["height", "desc"]; }
 
     const orderBy = parameters.orderBy.split(":").map((p) => p.toLowerCase());

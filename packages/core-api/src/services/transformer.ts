@@ -45,11 +45,11 @@ class Transformer {
     });
   }
 
-  public toResource(request, data, transformer) {
+  public toResource(request, data, transformer): object {
     return this.transformers.get(request.pre.apiVersion)[transformer](data);
   }
 
-  public toCollection(request, data, transformer) {
+  public toCollection(request, data, transformer): object[] {
     return data.map((d) => this.toResource(request, d, transformer));
   }
 }

@@ -11,7 +11,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object}  params
    * @return {Object}
    */
-  public async findAll(parameters: any = {}) {
+  public async findAll(parameters: any = {}): Promise<any> {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -68,7 +68,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object}  params
    * @return {Object}
    */
-  public async findAllLegacy(parameters: any = {}) {
+  public async findAllLegacy(parameters: any = {}): Promise<any> {
     const selectQuery = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query);
@@ -115,7 +115,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async findAllByWallet(wallet, parameters: any = {}) {
+  public async findAllByWallet(wallet, parameters: any = {}): Promise<any> {
     const selectQuery = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query);
@@ -148,7 +148,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async findAllBySender(senderPublicKey, parameters: any = {}) {
+  public async findAllBySender(senderPublicKey, parameters: any = {}): Promise<any> {
     return this.findAll({ ...{ senderPublicKey }, ...parameters });
   }
 
@@ -158,7 +158,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async findAllByRecipient(recipientId, parameters: any = {}) {
+  public async findAllByRecipient(recipientId, parameters: any = {}): Promise<any> {
     return this.findAll({ ...{ recipientId }, ...parameters });
   }
 
@@ -169,7 +169,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async allVotesBySender(senderPublicKey, parameters: any = {}) {
+  public async allVotesBySender(senderPublicKey, parameters: any = {}): Promise<any> {
     return this.findAll({
       ...{ senderPublicKey, type: constants.TRANSACTION_TYPES.VOTE },
       ...parameters,
@@ -182,7 +182,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async findAllByBlock(blockId, parameters: any = {}) {
+  public async findAllByBlock(blockId, parameters: any = {}): Promise<any> {
     return this.findAll({ ...{ blockId }, ...parameters });
   }
 
@@ -192,7 +192,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} parameters
    * @return {Object}
    */
-  public async findAllByType(type, parameters: any = {}) {
+  public async findAllByType(type, parameters: any = {}): Promise<any> {
     return this.findAll({ ...{ type }, ...parameters });
   }
 
@@ -201,7 +201,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Number} id
    * @return {Object}
    */
-  public async findById(id) {
+  public async findById(id): Promise<any> {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -218,7 +218,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Number} id
    * @return {Object}
    */
-  public async findByTypeAndId(type, id) {
+  public async findByTypeAndId(type, id): Promise<any> {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -234,7 +234,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Array} ids
    * @return {Object}
    */
-  public async findByIds(ids) {
+  public async findByIds(ids): Promise<any> {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -247,7 +247,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * Get all transactions that have a vendor field.
    * @return {Object}
    */
-  public async findWithVendorField() {
+  public async findWithVendorField(): Promise<any> {
     const query = this.query
       .select(this.query.block_id, this.query.serialized)
       .from(this.query)
@@ -262,7 +262,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * Calculates min, max and average fee statistics based on transactions table
    * @return {Object}
    */
-  public async getFeeStatistics() {
+  public async getFeeStatistics(): Promise<any> {
     const query = this.query
       .select(
         this.query.type,
@@ -287,7 +287,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Object} params
    * @return {Object}
    */
-  public async search(parameters) {
+  public async search(parameters): Promise<any> {
     const selectQuery = this.query.select().from(this.query);
     const countQuery = this._makeEstimateQuery();
 
@@ -341,7 +341,7 @@ export default class TransactionsRepository extends Repository implements IRepos
     return results;
   }
 
-  public getModel() {
+  public getModel(): object {
     return this.database.models.transaction;
   }
 
@@ -350,7 +350,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {Array|Object} data
    * @return {Object}
    */
-  public async __mapBlocksToTransactions(data) {
+  public async __mapBlocksToTransactions(data): Promise<any> {
     const blockQuery = this.database.models.block.query();
 
     // Array...
@@ -419,7 +419,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {String} blockId
    * @return {Object|null}
    */
-  public __getBlockCache(blockId) {
+  public __getBlockCache(blockId): any {
     const height = this.cache.get(`heights:${blockId}`);
 
     return height ? { height, id: blockId } : null;
@@ -431,7 +431,7 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param  {String} block.id
    * @param  {Number} block.height
    */
-  public __setBlockCache({ id, height }) {
+  public __setBlockCache({ id, height }): void {
     this.cache.set(`heights:${id}`, height);
   }
 
@@ -440,11 +440,11 @@ export default class TransactionsRepository extends Repository implements IRepos
    * @param {String} senderId
    * @return {String}
    */
-  public __publicKeyFromSenderId(senderId) {
+  public __publicKeyFromSenderId(senderId): string {
     return this.database.walletManager.findByAddress(senderId).publicKey;
   }
 
-  public __orderBy(parameters) {
+  public __orderBy(parameters): string[] {
     return parameters.orderBy
       ? parameters.orderBy.split(":").map((p) => p.toLowerCase())
       : ["timestamp", "desc"];

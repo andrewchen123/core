@@ -18,11 +18,11 @@ export default class Repository {
     this.__mapColumns();
   }
 
-  public async _find(query) {
+  public async _find(query): Promise<any> {
     return this.database.query.oneOrNone(query.toQuery());
   }
 
-  public async _findMany(query) {
+  public async _findMany(query): Promise<any> {
     return this.database.query.manyOrNone(query.toQuery());
   }
 
@@ -30,7 +30,7 @@ export default class Repository {
     selectQuery,
     countQuery,
     { limit, offset, orderBy },
-  ) {
+  ): Promise<any> {
     const { count } = await this._find(countQuery);
 
     if (this.columns.includes(orderBy[0])) {
@@ -45,17 +45,17 @@ export default class Repository {
     };
   }
 
-  public _makeCountQuery() {
+  public _makeCountQuery(): Promise<any> {
     return this.query.select("count(*) AS count").from(this.query);
   }
 
-  public _makeEstimateQuery() {
+  public _makeEstimateQuery(): Promise<any> {
     return this.query
       .select("count(*) AS count")
       .from(`${this.model.getTable()} TABLESAMPLE SYSTEM (100)`);
   }
 
-  public _formatConditions(parameters) {
+  public _formatConditions(parameters): any {
     const columns = this.model.getColumnSet().columns.map((column) => ({
       name: column.name,
       prop: column.prop || column.name,
@@ -74,7 +74,7 @@ export default class Repository {
       }, {});
   }
 
-  public __mapColumns() {
+  public __mapColumns(): void {
     this.columns = [];
 
     for (const column of this.model.getColumnSet().columns) {
