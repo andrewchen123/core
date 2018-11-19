@@ -28,7 +28,8 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
         } else if (isBoolean(query[key])) {
           query[key] = query[key].toLowerCase() === "true";
         } else if (isNumber(query[key])) {
-          query[key] = query[key] === Number(query[key])
+          // @ts-ignore
+          query[key] = query[key] == Number(query[key])
               ? Number(query[key])
               : bignumify(query[key]).toString();
         } else {

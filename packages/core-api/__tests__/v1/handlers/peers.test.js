@@ -3,7 +3,7 @@ const app = require('../../__support__/setup')
 const utils = require('../utils')
 
 const peerIp = '167.114.29.55'
-const peerPort = '4002'
+const peerPort = 4002
 
 beforeAll(async () => {
   await app.setUp()

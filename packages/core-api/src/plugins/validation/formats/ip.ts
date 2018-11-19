@@ -1,4 +1,4 @@
-import ip from "ip";
+import * as ip from "ip";
 
 export default function(ajv) {
   ajv.addFormat("ip", {
