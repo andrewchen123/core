@@ -12,6 +12,7 @@ import * as Container from "@arkecosystem/core-container";
 export default class Server {
   private config: any;
   private logger: any;
+
   private http: Hapi.Server;
   private https: Hapi.Server;
 

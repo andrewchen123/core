@@ -14,9 +14,14 @@ export const plugin = {
       return;
     }
 
-    return new Server(options);
+    const server = new Server(options);
+    await server.start();
+
+    return server;
   },
   async deregister(container, options) {
-    return container.resolvePlugin("api").stop();
+    if (options.enabled) {
+      return container.resolvePlugin("api").stop();
+    }
   },
 };
