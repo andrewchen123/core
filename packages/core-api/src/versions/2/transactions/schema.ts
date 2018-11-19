@@ -2,7 +2,7 @@ import * as Container from "@arkecosystem/core-container";
 import { validator } from "@arkecosystem/crypto";
 import * as Pagination from "../shared/schemas/pagination";
 
-const Joi = validator.engine.joi
+const Joi = validator.engine.joi;
 
 export const index: object = {
   query: {
@@ -50,7 +50,7 @@ export const store: object = {
     transactions: Joi.arkTransactions()
       .min(1)
       .max(
-        Container.resolveOptions('transactionPool').maxTransactionsPerRequest,
+        Container.resolveOptions("transactionPool").maxTransactionsPerRequest,
       )
       .options({ stripUnknown: true }),
   },
