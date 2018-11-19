@@ -1,6 +1,8 @@
 import * as Container from "@arkecosystem/core-container";
-import * as Joi from "joi";
+import { validator } from "@arkecosystem/crypto";
 import * as Pagination from "../shared/schemas/pagination";
+
+const Joi = validator.engine.joi
 
 export const index: object = {
   query: {
@@ -45,17 +47,12 @@ export const index: object = {
 
 export const store: object = {
   payload: {
-    transactions: Joi.array()
+    transactions: Joi.arkTransactions()
+      .min(1)
       .max(
-        Container.resolveOptions("transactionPool").maxTransactionsPerRequest,
+        Container.resolveOptions('transactionPool').maxTransactionsPerRequest,
       )
-      .items(
-        Joi.object({
-          vendorField: Joi.string()
-            .empty("")
-            .max(64, "utf8"),
-        }).options({ allowUnknown: true }),
-      ),
+      .options({ stripUnknown: true }),
   },
 };
 
