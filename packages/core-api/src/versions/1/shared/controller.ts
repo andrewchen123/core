@@ -3,7 +3,7 @@ import * as Hapi from "hapi";
 import Transformer from "../../../services/transformer";
 
 export default class Controller {
-  protected paginate(request: Hapi.Request) {
+  protected paginate(request: Hapi.Request): any {
     return {
       // @ts-ignore
       offset: request.query.offset || 0,
@@ -12,17 +12,17 @@ export default class Controller {
     };
   }
 
-  protected respondWith(data, error = false) {
+  protected respondWith(data, error = false): object {
     return error
       ? { error: data, success: false }
       : { ...data, success: true };
   }
 
-  protected toResource(request, data, transformer) {
+  protected toResource(request, data, transformer): object {
     return Transformer.toResource(request, data, transformer);
   }
 
-  protected toCollection(request, data, transformer) {
+  protected toCollection(request, data, transformer): object {
     return Transformer.toCollection(request, data, transformer);
   }
 }
