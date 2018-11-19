@@ -8,7 +8,7 @@ export default class Repository {
   public query: any;
   public columns: string[] = [];
 
-  constructor() {
+  public constructor() {
     this.database = Container.resolvePlugin("database");
     this.cache = this.database.getCache();
     // @ts-ignore

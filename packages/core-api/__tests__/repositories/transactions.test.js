@@ -20,7 +20,8 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  repository = require('../../lib/repositories/transactions')
+  const TransactionRepo = require('../../lib/repositories/transactions').default
+  repository = new TransactionRepo()
 })
 
 describe('Transaction Repository', () => {
