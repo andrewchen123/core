@@ -1,5 +1,5 @@
 import * as Hapi from "hapi";
-import * as Server from "./server";
+import Server from "./server";
 
 export const plugin = {
   pkg: require("../package.json"),
@@ -14,7 +14,7 @@ export const plugin = {
       return;
     }
 
-    return Server.init(options);
+    return new Server(options);
   },
   async deregister(container, options) {
     if (options.enabled) {

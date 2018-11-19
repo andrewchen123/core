@@ -44,6 +44,7 @@ export default class TransactionsController extends Controller {
       }
 
       const { eligible, notEligible } = this.transactionPool.checkEligibility(
+        // @ts-ignore
         request.payload.transactions,
       );
 

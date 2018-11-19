@@ -36,6 +36,7 @@ export default class TransactionsController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const result = await transactionsRepository.findById(request.query.id);
 
       if (!result) {
@@ -72,6 +73,7 @@ export default class TransactionsController extends Controller {
 
   public async showUnconfirmed(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const transaction = this.transactionPool.getTransaction(request.query.id);
 
       if (!transaction) {

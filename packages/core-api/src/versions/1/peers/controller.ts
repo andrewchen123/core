@@ -29,21 +29,32 @@ export default class PeersController extends Controller {
           return peer;
         })
         .sort((a, b) => a.delay - b.delay);
+      // @ts-ignore
       peers = request.query.os
+        // @ts-ignore
         ? allPeers.filter((peer) => peer.os === request.query.os)
         : peers;
+      // @ts-ignore
       peers = request.query.status
+        // @ts-ignore
         ? allPeers.filter((peer) => peer.status === request.query.status)
         : peers;
+      // @ts-ignore
       peers = request.query.port
+        // @ts-ignore
         ? allPeers.filter((peer) => peer.port === request.query.port)
         : peers;
+      // @ts-ignore
       peers = request.query.version
+        // @ts-ignore
         ? allPeers.filter((peer) => peer.version === request.query.version)
         : peers;
+      // @ts-ignore
       peers = peers.slice(0, request.query.limit || 100);
 
+      // @ts-ignore
       if (request.query.orderBy) {
+        // @ts-ignore
         const order = request.query.orderBy.split(":");
         if (["port", "status", "os", "version"].includes(order[0])) {
           peers = order[1].toUpperCase() === "ASC"
@@ -72,11 +83,13 @@ export default class PeersController extends Controller {
       }
 
       const peer = peers.find(
+        // @ts-ignore
         (elem) => elem.ip === request.query.ip && +elem.port === +request.query.port,
       );
 
       if (!peer) {
         return super.respondWith(
+          // @ts-ignore
           `Peer ${request.query.ip}:${request.query.port} not found`,
           true,
         );

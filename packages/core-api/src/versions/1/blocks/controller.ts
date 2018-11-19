@@ -39,10 +39,12 @@ export default class BlocksController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const block = await blocksRepository.findById(request.query.id);
 
       if (!block) {
         return super.respondWith(
+          // @ts-ignore
           `Block with id ${request.query.id} not found`,
           true,
         );

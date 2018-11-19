@@ -18,21 +18,32 @@ export default class PeersController extends Controller {
       const allPeers = await this.blockchain.p2p.getPeers();
 
       let result = allPeers.sort((a, b) => a.delay - b.delay);
+      // @ts-ignore
       result = request.query.os
+        // @ts-ignore
         ? result.filter((peer) => peer.os === request.query.os)
         : result;
+      // @ts-ignore
       result = request.query.status
+        // @ts-ignore
         ? result.filter((peer) => peer.status === request.query.status)
         : result;
+      // @ts-ignore
       result = request.query.port
+        // @ts-ignore
         ? result.filter((peer) => peer.port === request.query.port)
         : result;
+      // @ts-ignore
       result = request.query.version
+        // @ts-ignore
         ? result.filter((peer) => peer.version === request.query.version)
         : result;
+      // @ts-ignore
       result = result.slice(0, request.query.limit || 100);
 
+      // @ts-ignore
       if (request.query.orderBy) {
+        // @ts-ignore
         const order = request.query.orderBy.split(":");
 
         if (["port", "status", "os", "version"].includes(order[0])) {
@@ -73,6 +84,7 @@ export default class PeersController extends Controller {
 
       return super.respondWithCollection(
         request,
+        // @ts-ignore
         Object.values(peers).map((peer) => peer.peer),
         "peer",
       );

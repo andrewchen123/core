@@ -5,7 +5,9 @@ import Transformer from "../../../services/transformer";
 export default class Controller {
   protected paginate(request: Hapi.Request) {
     return {
+      // @ts-ignore
       offset: request.query.offset || 0,
+      // @ts-ignore
       limit: request.query.limit || 100,
     };
   }

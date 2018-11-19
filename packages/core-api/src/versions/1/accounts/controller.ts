@@ -34,6 +34,7 @@ export default class AccountsController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
@@ -50,6 +51,7 @@ export default class AccountsController extends Controller {
 
   public async balance(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
@@ -67,6 +69,7 @@ export default class AccountsController extends Controller {
 
   public async publicKey(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
@@ -92,6 +95,7 @@ export default class AccountsController extends Controller {
 
   public async delegates(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const account = await this.database.wallets.findById(request.query.address);
 
       if (!account) {
@@ -100,6 +104,7 @@ export default class AccountsController extends Controller {
 
       if (!account.vote) {
         return super.respondWith(
+          // @ts-ignore
           `Address ${request.query.address} hasn't voted yet.`,
           true,
         );

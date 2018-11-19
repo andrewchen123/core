@@ -39,11 +39,13 @@ export default class DelegatesController extends Controller {
 
   public async show(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       if (!request.query.publicKey && !request.query.username) {
         return super.respondWith("Delegate not found", true);
       }
 
       const delegate = await this.database.delegates.findById(
+        // @ts-ignore
         request.query.publicKey || request.query.username,
       );
 
@@ -72,6 +74,7 @@ export default class DelegatesController extends Controller {
   public async search(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const query = {
+        // @ts-ignore
         username: request.query.q,
       };
       const { rows } = await this.database.delegates.search({
@@ -89,6 +92,7 @@ export default class DelegatesController extends Controller {
 
   public async voters(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
+      // @ts-ignore
       const delegate = await this.database.delegates.findById(request.query.publicKey);
 
       if (!delegate) {
@@ -121,6 +125,7 @@ export default class DelegatesController extends Controller {
   public async forged(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const wallet = this.database.walletManager.findByPublicKey(
+        // @ts-ignore
         request.query.generatorPublicKey,
       );
 
@@ -137,6 +142,7 @@ export default class DelegatesController extends Controller {
   public async nextForgers(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const lastBlock = this.blockchain.getLastBlock();
+      // @ts-ignore
       const limit = request.query.limit || 10;
 
       const delegatesCount = this.config.getConstants(lastBlock).activeDelegates;

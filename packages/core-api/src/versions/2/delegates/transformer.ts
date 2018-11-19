@@ -29,6 +29,7 @@ export default function(delegate) {
   const lastBlock = delegate.lastBlock;
 
   if (lastBlock) {
+    // @ts-ignore
     data.blocks.last = {
       id: lastBlock.id,
       timestamp: formatTimestamp(lastBlock.timestamp),

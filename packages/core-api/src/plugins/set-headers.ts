@@ -7,10 +7,12 @@ const register = async (server: Hapi.Server, options: object): Promise<void> => 
     async method(request, h) {
       const response = request.response;
 
+      // @ts-ignore
       if (response.isBoom && response.data) {
-        // Deleting the property beforehand makes it appear last in the
-        // response body.
+        // Deleting the property beforehand makes it appear last in the response body.
+        // @ts-ignore
         delete response.output.payload.error;
+        // @ts-ignore
         response.output = { payload: { error: response.data } };
       }
 
