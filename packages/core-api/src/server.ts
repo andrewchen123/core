@@ -1,5 +1,6 @@
 /* eslint no-await-in-loop: "off" */
 
+import * as Container from "@arkecosystem/core-container";
 import {
   createSecureServer,
   createServer,
@@ -7,7 +8,6 @@ import {
   plugins,
 } from "@arkecosystem/core-http-utils";
 import * as Hapi from "hapi";
-import * as Container from "@arkecosystem/core-container";
 
 export default class Server {
   private config: any;
