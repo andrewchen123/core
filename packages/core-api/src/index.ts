@@ -17,14 +17,6 @@ export const plugin = {
     return new Server(options);
   },
   async deregister(container, options) {
-    if (options.enabled) {
-      const servers: Map<string, Hapi.Server> = container.resolvePlugin("api");
-
-      for (const [type, server] of servers) {
-        container.resolvePlugin("logger").info(`Stopping Public ${type} API`);
-
-        return server.stop();
-      }
-    }
+    return container.resolvePlugin("api").stop();
   },
 };

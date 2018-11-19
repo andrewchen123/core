@@ -7,14 +7,17 @@ import {
   plugins,
 } from "@arkecosystem/core-http-utils";
 import * as Hapi from "hapi";
+import * as Container from "@arkecosystem/core-container";
 
 export default class Server {
   private config: any;
+  private logger: any;
   private http: Hapi.Server;
   private https: Hapi.Server;
 
   public constructor(config: any) {
     this.config = config;
+    this.logger = Container.resolvePlugin("logger");
   }
 
   public async start(): Promise<void> {
@@ -44,10 +47,12 @@ export default class Server {
 
   public async stop(): Promise<void> {
     if (this.http) {
+      this.logger.info(`Stopping Public HTTP API`);
       await this.http.stop();
     }
 
     if (this.https) {
+      this.logger.info(`Stopping Public HTTPS API`);
       await this.https.stop();
     }
   }
