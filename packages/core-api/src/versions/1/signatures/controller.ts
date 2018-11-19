@@ -16,7 +16,7 @@ export default class SignaturesController extends Controller {
 
   public async fee(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const height: number = this.blockchain.getLastBlock().data.height;
+      const height: number = this.blockchain.getLastHeight();
 
       return super.respondWith({
         fee: this.config.getConstants(height).fees.secondSignature,

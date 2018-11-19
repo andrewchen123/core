@@ -169,7 +169,7 @@ export default class TransactionsController extends Controller {
   public async fees(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return {
-        data: this.config.getConstants(this.blockchain.getLastBlock().data.height).fees,
+        data: this.config.getConstants(this.blockchain.getLastHeight()).fees,
       };
     } catch (error) {
       return Boom.badImplementation(error);

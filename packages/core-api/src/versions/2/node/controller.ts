@@ -62,7 +62,7 @@ export default class NodeController extends Controller {
           explorer: this.config.network.client.explorer,
           version: this.config.network.pubKeyHash,
           ports: super.toResource(request, this.config, "ports"),
-          constants: this.config.getConstants(this.blockchain.getLastBlock().data.height),
+          constants: this.config.getConstants(this.blockchain.getLastHeight()),
           feeStatistics: super.toCollection(
             request,
             feeStatisticsData,

@@ -114,7 +114,7 @@ export default class DelegatesController extends Controller {
   public async fee(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return super.respondWith({
-        fee: this.config.getConstants(this.blockchain.getLastBlock().data.height).fees
+        fee: this.config.getConstants(this.blockchain.getLastHeight()).fees
           .delegateRegistration,
       });
     } catch (error) {

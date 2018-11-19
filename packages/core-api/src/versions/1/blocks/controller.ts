@@ -61,7 +61,7 @@ export default class BlocksController extends Controller {
   public async epoch(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return super.respondWith({
-        epoch: this.config.getConstants(this.blockchain.getLastBlock().data.height).epoch,
+        epoch: this.config.getConstants(this.blockchain.getLastHeight()).epoch,
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -89,7 +89,7 @@ export default class BlocksController extends Controller {
   public async fee(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return super.respondWith({
-        fee: this.config.getConstants(this.blockchain.getLastBlock().data.height).fees
+        fee: this.config.getConstants(this.blockchain.getLastHeight()).fees
           .transfer,
       });
     } catch (error) {
@@ -99,7 +99,7 @@ export default class BlocksController extends Controller {
 
   public async fees(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const fees = this.config.getConstants(this.blockchain.getLastBlock().data.height).fees;
+      const fees = this.config.getConstants(this.blockchain.getLastHeight()).fees;
 
       return super.respondWith({
         fees: {
@@ -118,7 +118,7 @@ export default class BlocksController extends Controller {
   public async milestone(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return super.respondWith({
-        milestone: Math.floor(this.blockchain.getLastBlock().data.height / 3000000),
+        milestone: Math.floor(this.blockchain.getLastHeight() / 3000000),
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -128,7 +128,7 @@ export default class BlocksController extends Controller {
   public async reward(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       return super.respondWith({
-        reward: this.config.getConstants(this.blockchain.getLastBlock().data.height).reward,
+        reward: this.config.getConstants(this.blockchain.getLastHeight()).reward,
       });
     } catch (error) {
       return Boom.badImplementation(error);
