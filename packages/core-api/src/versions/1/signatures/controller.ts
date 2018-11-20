@@ -19,7 +19,7 @@ export default class SignaturesController extends Controller {
       const height: number = this.blockchain.getLastHeight();
 
       return super.respondWith({
-        fee: this.config.getConstants(height).fees.secondSignature,
+        fee: this.config.getConstants(height).fees.staticFees.secondSignature,
       });
     } catch (error) {
       return Boom.badImplementation(error);

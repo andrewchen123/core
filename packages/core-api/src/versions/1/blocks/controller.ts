@@ -90,7 +90,7 @@ export default class BlocksController extends Controller {
     try {
       return super.respondWith({
         fee: this.config.getConstants(this.blockchain.getLastHeight()).fees
-          .transfer,
+          .staticFees.transfer,
       });
     } catch (error) {
       return Boom.badImplementation(error);
@@ -99,7 +99,8 @@ export default class BlocksController extends Controller {
 
   public async fees(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const fees = this.config.getConstants(this.blockchain.getLastHeight()).fees;
+      const lastHeight = this.blockchain.getLastHeight();
+      const fees = this.config.getConstants(lastHeight).fees.staticFees;
 
       return super.respondWith({
         fees: {
@@ -164,7 +165,7 @@ export default class BlocksController extends Controller {
       return super.respondWith({
         epoch: constants.epoch,
         height: lastBlock.data.height,
-        fee: constants.fees.transfer,
+        fee: constants.fees.staticFees.transfer,
         milestone: Math.floor(lastBlock.data.height / 3000000),
         nethash: this.config.network.nethash,
         reward: constants.reward,

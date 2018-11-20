@@ -115,7 +115,7 @@ export default class DelegatesController extends Controller {
     try {
       return super.respondWith({
         fee: this.config.getConstants(this.blockchain.getLastHeight()).fees
-          .delegateRegistration,
+          .staticFees.delegateRegistration,
       });
     } catch (error) {
       return Boom.badImplementation(error);
