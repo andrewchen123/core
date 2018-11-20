@@ -40,38 +40,26 @@ export default class TransactionsController extends Controller {
   public async store(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       if (!this.transactionPool.options.enabled) {
-        return Boom.serverUnavailable("Transaction pool is disabled.");
+        return Boom.serverUnavailable('Transaction pool is disabled.')
       }
 
-      const { eligible, notEligible } = this.transactionPool.checkEligibility(
-        // @ts-ignore
-        request.payload.transactions,
-      );
+      const guard = new TransactionGuard(this.transactionPool)
 
-      const guard = new TransactionGuard(this.transactionPool);
+      const result = await guard.validate(request.payload.transactions)
 
-      for (const ne of notEligible) {
-        guard.invalidate(ne.transaction, ne.reason);
+      if (result.broadcast.length > 0) {
+        Container.resolvePlugin('p2p').broadcastTransactions(result.broadcast)
       }
 
-      await guard.validate(eligible);
-
-      if (guard.hasAny("accept")) {
-        this.logger.info(
-          `Received ${guard.accept.length} new ${pluralize(
-            "transaction",
-            guard.accept.length,
-          )}`,
-        );
-
-        await guard.addToTransactionPool("accept");
+      return {
+        data: {
+          accept: result.accept.map(t => t.id),
+          broadcast: result.broadcast.map(t => t.id),
+          excess: result.excess.map(t => t.id),
+          invalid: result.invalid.map(t => t.id),
+        },
+        errors: result.errors,
       }
-
-      if (guard.hasAny("broadcast")) {
-        Container.resolvePlugin("p2p").broadcastTransactions(guard.broadcast);
-      }
-
-      return guard.toJson();
     } catch (error) {
       return Boom.badImplementation(error);
     }

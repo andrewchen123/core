@@ -218,8 +218,6 @@ module.exports = class Wallet {
   auditApply(transaction) {
     const audit = []
 
-    audit.push({ Network: configManager.config })
-
     if (this.multisignature) {
       audit.push({
         Mutisignature: this.verifySignatures(transaction, this.multisignature),

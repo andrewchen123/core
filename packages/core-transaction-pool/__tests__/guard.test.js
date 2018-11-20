@@ -55,10 +55,8 @@ describe('Transaction Guard', () => {
 
       expect(result.errors[transactions[1].id]).toEqual([
         {
-          message: `Error: [PoolWalletManager] Can't apply transaction ${
-            transactions[1].id
-          }`,
-          type: 'ERR_UNKNOWN',
+          message: `Error: Can't apply transaction ${transactions[1].id}`,
+          type: 'ERR_APPLY',
         },
       ])
     })
@@ -135,10 +133,10 @@ describe('Transaction Guard', () => {
 
         expect(result.errors[allTransactions[txNumber - 1].id]).toEqual([
           {
-            message: `Error: [PoolWalletManager] Can't apply transaction ${
+            message: `Error: Can't apply transaction ${
               allTransactions[txNumber - 1].id
             }`,
-            type: 'ERR_UNKNOWN',
+            type: 'ERR_APPLY',
           },
         ])
       },
@@ -195,9 +193,9 @@ describe('Transaction Guard', () => {
     })
   })
 
-  describe('__transformAndFilterTransactions', () => {
+  describe('__filterAndTransformTransactions', () => {
     it('should be a function', () => {
-      expect(guard.__transformAndFilterTransactions).toBeFunction()
+      expect(guard.__filterAndTransformTransactions).toBeFunction()
     })
 
     it('should reject duplicate transactions', () => {
@@ -205,7 +203,7 @@ describe('Transaction Guard', () => {
       guard.pool.pingTransaction = jest.fn(() => true)
 
       const tx = { id: '1' }
-      guard.__transformAndFilterTransactions([tx])
+      guard.__filterAndTransformTransactions([tx])
 
       expect(guard.errors[tx.id]).toEqual([
         {
@@ -221,7 +219,7 @@ describe('Transaction Guard', () => {
       guard.pool.isSenderBlocked = jest.fn(() => true)
 
       const tx = { id: '1', senderPublicKey: 'affe' }
-      guard.__transformAndFilterTransactions([tx])
+      guard.__filterAndTransformTransactions([tx])
 
       expect(guard.errors[tx.id]).toEqual([
         {
@@ -247,7 +245,7 @@ describe('Transaction Guard', () => {
         senderPublicKey: 'affe',
         timestamp: slots.getTime() + secondsInFuture,
       }
-      guard.__transformAndFilterTransactions([tx])
+      guard.__filterAndTransformTransactions([tx])
 
       expect(guard.errors[tx.id]).toEqual([
         {
@@ -262,21 +260,15 @@ describe('Transaction Guard', () => {
     })
   })
 
-  describe('__determineValidTransactions', () => {
+  describe('__validateTransaction', () => {
     it('should be a function', () => {
-      expect(guard.__determineValidTransactions).toBeFunction()
+      expect(guard.__validateTransaction).toBeFunction()
     })
   })
 
-  describe('__determineExcessTransactions', () => {
+  describe('__addTransactionsToPool', () => {
     it('should be a function', () => {
-      expect(guard.__determineExcessTransactions).toBeFunction()
-    })
-  })
-
-  describe('__determineFeeMatchingTransactions', () => {
-    it('should be a function', () => {
-      expect(guard.__determineFeeMatchingTransactions).toBeFunction()
+      expect(guard.__addTransactionsToPool).toBeFunction()
     })
   })
 
